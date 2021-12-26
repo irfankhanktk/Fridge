@@ -16,7 +16,46 @@ import other from './Screens/navigation/other';
 import Vegatableview from './Screens/view/Vegatableview';
 import useView from './Screens/use/useView';
 import newdish from './Screens/use/newdish';
+import axios from 'axios';
 
+//Axios Configuration
+client = axios.create({
+  baseURL: urls.base_url,
+});
+
+//Axios Interceptors
+client.interceptors.request.use(
+  async config => {
+
+    config.headers = {
+      Accept: 'application/json',
+      'Cache-Control': 'no-cache',
+      'Content-Type': 'multipart/form-data, application/json',
+    };
+    config.params = config.params || {};
+   
+    return config;
+  },
+  error => {
+    console.log('I am here');
+    Promise.reject(error);
+  },
+);
+
+client.interceptors.response.use(
+  response => {
+    // AsyncStorage.clear();
+    console.log('RESPONSE INTERCPTOR : ', response?.status);
+    return response;
+  },
+  async function (error) {
+    console.log('INTERCEPTOR ERROR RESPONSE : ', error?.response?.status);
+    console.log('INTERCEPTOR ERROR RESPONSE CONFIG: ', error?.config);
+   
+    console.log('I am here');
+    return Promise.reject(error);
+  },
+);
 function HomeScreen() {
   return (
     <View>
