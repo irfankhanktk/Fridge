@@ -17,6 +17,7 @@ import Vegatableview from './Screens/view/Vegatableview';
 import useView from './Screens/use/useView';
 import newdish from './Screens/use/newdish';
 import axios from 'axios';
+import urls from './src/api/urls';
 
 //Axios Configuration
 client = axios.create({
