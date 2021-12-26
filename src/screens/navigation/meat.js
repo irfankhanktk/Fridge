@@ -22,7 +22,7 @@ const Meat = ({ navigation }) => {
         <View style={{ backgroundColor: "#E0EED6", height: "100%" }}>
             <ImageBackground
                 style={{ width: '100%', height: '100%' }}
-                source={require('../../Assets/meat.png')}>
+                source={require('../../assets/meat.png')}>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{ fontWeight: "bold", color: "#B2A7F0", paddingTop: 25, fontSize: 28 }}> Food</Text>
                     <View style={{ borderBottomWidth: 2, width: 225, height: 50, marginTop: 12, marginLeft: 65 }}>

@@ -3,21 +3,22 @@ import { View, Text, Image, StyleSheet, ImageBackground, StatusBar } from 'react
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import ActionBarImage from './headerbar/Actionbar';
-import Home from './Screens/Home';
-import Add from './Screens/Add';
-import viewitem from './Screens/viewitem';
-import notification from './Screens/notification';
-import todaymeal from './Screens/todaymeal';
-import vegatable from './Screens/navigation/vegatable';
-import fruits from './Screens/navigation/fruits';
-import juices from './Screens/navigation/juices';
-import meat from './Screens/navigation/meat';
-import other from './Screens/navigation/other';
-import Vegatableview from './Screens/view/Vegatableview';
-import useView from './Screens/use/useView';
-import newdish from './Screens/use/newdish';
+import Home from './src/screens/Home';
+import Add from './src/screens/Add';
+import viewitem from './src/screens/viewitem';
+import notification from './src/screens/notification';
+import todaymeal from './src/screens/todaymeal';
+import vegatable from './src/screens/navigation/vegatable';
+import fruits from './src/screens/navigation/fruits';
+import juices from './src/screens/navigation/juices';
+import meat from './src/screens/navigation/meat';
+import other from './src/screens/navigation/other';
+import Vegatableview from './src/screens/view/Vegatableview';
+import useView from './src/screens/use/useView';
+import newdish from './src/screens/use/newdish';
 import axios from 'axios';
 import urls from './src/api/urls';
+import SplashScreen from './src/screens/Splash';
 
 //Axios Configuration
 client = axios.create({
@@ -57,49 +58,7 @@ client.interceptors.response.use(
     return Promise.reject(error);
   },
 );
-function HomeScreen() {
-  return (
-    <View>
-      <Home />
-    </View>
-  );
-}
-function SplashScreen({ navigation }) {
-  setTimeout(() => {
-    navigation.navigate('Home');
-  }, 3000);
-  return (
-    <View style={styles.logo}>
-      <ImageBackground
-        source={require('./images/background.jpg')}
-        style={{
-          width: '100%',
-          height: '100%',
-        }}>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginTop: 250,
-          }}>
-          <Image
-            style={{
-              width: 120,
-              height: 120,
-            }}
-            source={require('./images/fridgeicon.png')}
-          />
-          <Text style={styles.logotext}>
-            <Text style={{ color: '#ff0', fontSize: 35, fontWeight: 'bold' }}>
-              MY FRIDGE
-            </Text>
-            <Text style={{ color: '#3e3f8f' }}> FOOD</Text>
-          </Text>
-        </View>
-      </ImageBackground>
-    </View>
-  );
-}
+
 const Stack = createStackNavigator();
 
 function App() {
@@ -267,17 +226,5 @@ function App() {
     </NavigationContainer>
   );
 }
-const styles = StyleSheet.create({
-  logo: {
-    alignItems: 'center',
-    flexGrow: 1,
-    justifyContent: 'center',
-  },
-  logotext: {
-    color: 'black',
-    fontSize: 35,
-    fontWeight: 'bold',
-  },
-});
 
 export default App;

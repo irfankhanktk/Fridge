@@ -59,7 +59,7 @@ const Vegatable = ({ navigation }) => {
     <View style={{ backgroundColor: '#E0EED6', height: '100%' }}>
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
-        source={require('../../Assets/vegetable.jpg')}>
+        source={require('../../assets/vegetable.jpg')}>
         <View style={{ flexDirection: 'row', marginTop: 25 }}>
           <Text
             style={{

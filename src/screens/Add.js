@@ -7,7 +7,8 @@ const Add = ({ navigation }) => {
         <SafeAreaView>
             <View>
                 <ImageBackground style={{ width: '100%', height: '100%' }}
-                    source={require('../images/back.jpeg')}>
+                    // source={require('../images/back.jpeg')}
+                    >
                     <View style={{ marginTop: 90 }}>
                         <TouchableOpacity onPress={() => navigation.navigate('vegatable')}>
                             <Text style={styles.text1}>VEGATABLES</Text>

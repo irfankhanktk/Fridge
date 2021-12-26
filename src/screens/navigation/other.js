@@ -21,7 +21,7 @@ const other = ({ navigation }) => {
         <View style={{ backgroundColor: "#E0EED6", height: "100%" }}>
             <ImageBackground
                 style={{ width: '100%', height: '100%' }}
-                source={require('../../Assets/bakery.jpg')}>
+                source={require('../../assets/bakery.jpg')}>
                 <View style={{ flexDirection: 'row', }}>
                     <Text style={{
                         fontWeight: "bold", color: "#FFD700",
