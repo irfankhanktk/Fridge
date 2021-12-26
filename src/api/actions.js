@@ -11,9 +11,9 @@ const postData = async (url,data) => {
     const response = await client.get(url);
     return response;
   };
-const ADMIN_ACTIONS = {
+const FRIDGE_ACTIONS = {
     postData,
     getData,
 };
 
-export default ADMIN_ACTIONS;
+export default FRIDGE_ACTIONS;
