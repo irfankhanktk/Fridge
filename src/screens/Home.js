@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 
 const Home = (props) => {
+    
     return (
         <SafeAreaView style={{flex:1}}>
             <View style={styles.container}>

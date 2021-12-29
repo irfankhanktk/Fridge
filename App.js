@@ -71,7 +71,7 @@ function App() {
         backgroundColor="#00BCD4"
         networkActivityIndicatorVisible={false}>
       </StatusBar>
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown:false}}>
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}

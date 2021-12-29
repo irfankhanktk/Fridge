@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, TouchableOpacity, View, Text, ImageBackground, SafeAreaView } from 'react-native';
 
 const Add = ({ navigation }) => {
-
+    
     return (
         <SafeAreaView>
             <View>
@@ -10,19 +10,19 @@ const Add = ({ navigation }) => {
                     // source={require('../images/back.jpeg')}
                     >
                     <View style={{ marginTop: 90 }}>
-                        <TouchableOpacity onPress={() => navigation.navigate('vegatable')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('vegatable',{category_id:1,title:'vegatable'})}>
                             <Text style={styles.text1}>VEGATABLES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('fruits')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('vegatable',{category_id:2,title:'fruits'})}>
                             <Text style={styles.text1}>FRUITS</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('juices')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('vegatable',{category_id:3,title:'juices'})}>
                             <Text style={styles.text1}>JUICES</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('meat')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('vegatable',{category_id:4,title:'meat'})}>
                             <Text style={styles.text1}>MEAT</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('other')}>
+                        <TouchableOpacity onPress={() => navigation.navigate('vegatable',{category_id:5,title:'other'})}>
                             <Text style={styles.text1}>OTHERS</Text>
                         </TouchableOpacity>
                     </View>
