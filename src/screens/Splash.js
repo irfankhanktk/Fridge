@@ -3,12 +3,12 @@ import {View,Text, StyleSheet, ImageBackground, Image} from 'react-native';
 
     const SplashScreen=({ navigation })=> {
         setTimeout(() => {
-          navigation.navigate('Home');
+          navigation.replace('Home');
         }, 3000);
         return (
           <View style={styles.logo}>
             <ImageBackground
-            //   source={require('./images/background.jpg')}
+              source={require('../images/background.jpg')}
               style={{
                 width: '100%',
                 height: '100%',
@@ -24,7 +24,7 @@ import {View,Text, StyleSheet, ImageBackground, Image} from 'react-native';
                     width: 120,
                     height: 120,
                   }}
-                //   source={require('./images/fridgeicon.png')}
+                  source={require('../images/fridgeicon.png')}
                 />
                 <Text style={styles.logotext}>
                   <Text style={{ color: '#ff0', fontSize: 35, fontWeight: 'bold' }}>

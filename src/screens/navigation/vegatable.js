@@ -1,31 +1,16 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ImageBackground,ScrollView } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
-import { ToastAndroid } from 'react-native';
+import React, { useState } from 'react';
+import { ImageBackground, StyleSheet, Text, ToastAndroid, TouchableOpacity, View } from 'react-native';
 import { TextInput } from 'react-native-gesture-handler';
 import FRIDGE_ACTIONS from '../../api/actions';
 import urls from '../../api/urls';
 import CustomHeader from '../../components/custom-header';
+import colors from '../colors';
 
 const Vegatable = ({ navigation,route }) => {
   const {category_id=1,title}=route.params;
   const [items, setItems] = React.useState([]);
-
-  var foodItemList = [
-    { fID: '1', foodName: 'Cabbage', expDate: '12/2/2021' },
-    { fID: '2', foodName: 'Palak Sabzi', expDate: '12/11/2021' },
-    { fID: '8', foodName: 'Tamoto', expDate: '12/21/2021' },
-    { fID: '4', foodName: 'Cacumber', expDate: '11/27/2021' },
-    { fID: '5', foodName: 'peas', expDate: '12/01/2021' },
-    { fID: '6', foodName: 'Lady Finger', expDate: '12/10/2021' },
-    { fID: '7', foodName: 'Bringel', expDate: '11/21/2021' },
-    { fID: '9', foodName: 'Patato', expDate: '12/30/2021' },
-    { fID: '10', foodName: 'Carrot', expDate: '1/05/2022' },
-  ];
-
-  const [selectFood, setSelectedFood] = useState('');
   const [selectItemId, setSelectedItemId] = useState(0);
-  const [selectFoodName, setSelectedFoodName] = useState('');
   const [weight, setWeight] = useState();
   const toast = () => {
     ToastAndroid.showWithGravityAndOffset(
@@ -62,21 +47,21 @@ const Vegatable = ({ navigation,route }) => {
   }
   return (
     <View style={{ flex: 1, backgroundColor: '#E0EED6', }}>
-      <CustomHeader title={`Add ${title}`} navigation={navigation}/>
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
         source={require('../../assets/vegetable.jpg')}>
+      <CustomHeader title={`Add ${title}`} navigation={navigation}/>
         <View style={{ ...styles.body }}>
           <View style={styles.row}>
             <Text style={styles.heading}>
               Food
             </Text>
             <View
-              style={{...styles.picker_container,borderRadius:20,backgroundColor: '#fff',overflow:'hidden'}}>
+              style={{...styles.picker_container,borderRadius:20,backgroundColor: colors.white,}}>
               <Picker
                 selectedValue={selectItemId}
                 style={{ borderRadius:20, }}
-                onValueChange={(itemValue, itemIndex) => {
+                onValueChange={(itemValue) => {
                   setSelectedItemId(itemValue);
                 }}>
                 <Picker.Item label="Select" value="select" />
@@ -92,15 +77,15 @@ const Vegatable = ({ navigation,route }) => {
               Weight
             </Text>
             <View
-              style={{...styles.picker_container,...styles.row,marginTop:0,borderRadius:20,justifyContent:'space-between',paddingHorizontal:10, backgroundColor: '#fff',}}>
+              style={{...styles.picker_container,...styles.row,marginTop:0,borderRadius:20,justifyContent:'space-between',paddingHorizontal:10, backgroundColor: colors.white,}}>
               <TextInput
                 onChangeText={setWeight}
                 placeholder="weight"
                 style={{ padding: 14,width:'80%', }} />
                  <Text
                 style={{
-                  fontWeight: 'bold', fontSize: 28,
-                   marginLeft: 5, color: '#B2A7F0'
+                  fontWeight: 'bold', fontSize: 15,
+                   marginLeft: 5, color: colors.primary
                 }}>
                 Kg
               </Text>
@@ -139,7 +124,7 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   heading: {
-    fontWeight: 'bold', color: '#B2A7F0',
+    fontWeight: 'bold', color:colors.white,
     fontSize: 28,
     width:'30%',
   },
