@@ -8,7 +8,6 @@ import Add from './src/screens/Add';
 import viewitem from './src/screens/viewitem';
 import notification from './src/screens/notification';
 import todaymeal from './src/screens/todaymeal';
-import vegatable from './src/screens/navigation/vegatable';
 import fruits from './src/screens/navigation/fruits';
 import juices from './src/screens/navigation/juices';
 import meat from './src/screens/navigation/meat';
@@ -19,6 +18,7 @@ import newdish from './src/screens/use/newdish';
 import axios from 'axios';
 import urls from './src/api/urls';
 import SplashScreen from './src/screens/Splash';
+import AddItem from './src/screens/navigation/add-item';
 
 //Axios Configuration
 client = axios.create({
@@ -46,7 +46,6 @@ client.interceptors.request.use(
 
 client.interceptors.response.use(
   response => {
-    // AsyncStorage.clear();
     console.log('RESPONSE INTERCPTOR : ', response?.status);
     return response;
   },
@@ -91,8 +90,8 @@ function App() {
           }}
         />
         <Stack.Screen
-          name="vegatable"
-          component={vegatable}
+          name="addItem"
+          component={AddItem}
           options={{
             title: 'Add Vegatable',
             headerTintColor: '#fff',

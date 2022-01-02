@@ -6,24 +6,25 @@ import {
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 import FRIDGE_ACTIONS from '../api/actions';
 import urls from '../api/urls';
 import CustomHeader from '../components/custom-header';
+import PrimaryButton from '../components/primary-button';
+import colors from './colors';
+import moment from 'moment';
 const viewitem = ({ navigation }) => {
   var [foodItemList, setFoodItemList] = useState([]);
-  var [serachVegetable, setserachVegetable] = useState([]);
-  var [satusView, setSatusView] = useState('');
-  var [search, setsearch] = useState('');
-  var [modalVisible, setmodalVisible] = useState(false);
-  const [selectedCategory, setSelectedCategory] = React.useState(0);
+  var [searchList, setSearchList] = useState([]);
+  var [searchText, setSearchText] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState(0);
   const onPressCategory = async (category_id = 1) => {
     if (selectedCategory === category_id) {
       setSelectedCategory(0);
       return;
     }
     try {
-      const res = await FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}`);
-      console.log('res:', res);
+      const res = await FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0`);
       setSelectedCategory(category_id);
       setFoodItemList(res?.data);
     } catch (error) {
@@ -31,55 +32,35 @@ const viewitem = ({ navigation }) => {
       setSelectedCategory(0);
     }
   }
-  const renderItem = ({ item }) => {
-    console.log(item);
-    return (
-      // <TouchableOpacity onPress={() => navigation.navigate('useView', item)}>
-      <TouchableOpacity
-        style={{
-          backgroundColor: 'blue',
-          width: 120,
-          margin: 20,
-          alignItems: 'center',
-          paddingVertical:7,
-          borderRadius:10,
-        }}>
-        <Text style={{ color: 'white', fontWeight: 'bold' }}>
-          {item?.item_name}
-        </Text>
-        {/* </TouchableOpacity> */}
-      </TouchableOpacity>
-    );
-  };
-  const valueSeacrch = () => {
-    let d = 0;
 
-    foodItemList.map(e => {
-      if (e.foodname === search) {
-        setserachVegetable(e);
 
-        setmodalVisible(true);
-        d = 1;
-      }
-    });
+  const valueSeacrch = async () => {
+    try {
+      // const res=await FRIDGE_ACTIONS.getData(urls.search_item+searchText);
+      const res = await FRIDGE_ACTIONS.getData(`${urls.search_item}${searchText}`);
+      console.log('res of search : ', res?.data);
+      setSearchList(res?.data);
 
-    if (d === 0) {
-      Alert.alert('Not Found Alert', search + ' is not found', [
-        {
-          text: 'OK',
-          onPress: () => console.log('Install Pressed'),
-        },
-      ]);
+    } catch (error) {
+      console.log('err:', error);
+      alert('Item Not Found');
     }
   };
+
+
+
   const ViewItems = () => (<View>
-    <FlatList
-      contentContainerStyle={{alignItems:'center'}}
-      data={foodItemList}
-      renderItem={renderItem}
-      keyExtractor={item => item.id}
-      numColumns={2}
-    />
+    {
+      foodItemList.map((ele) => {
+        return (
+          <View style={styles.item}>
+            <Text numberOfLines={1} style={{width:'40%',}}>{ele.item_name}</Text>
+            <Text >{ele.qty} {ele.unit}</Text>
+           {ele.expiry_date&& <Text>{moment(ele.expiry_date).format('ll')}</Text>}
+          </View>
+        )
+      })
+    }
   </View>)
   return (
     <View style={{ flex: 1 }}>
@@ -87,91 +68,77 @@ const viewitem = ({ navigation }) => {
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
         source={require('../images/mff.jpg')}>
-        <ScrollView>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
           <View style={{ paddingHorizontal: 22, flex: 1 }}>
             <View style={styles.searchbar}>
               <TextInput
                 placeholder="SEARCH ITEM HERE"
-                style={{ width: '40%' }}
-                onChangeText={e => setsearch(e)}
+                style={{ width: '90%' }}
+                onChangeText={(t) =>{
+                  if(!t){
+                    setSearchList([]);
+                  }
+                  setSearchText(t)}}
               />
-              <Icon
-                name="search"
+              <AntDesign
+                name="search1"
                 color={'black'}
                 size={22}
-                onPress={() => valueSeacrch()}
-                style={{ marginRight: 12 }}
+                onPress={valueSeacrch}
               />
             </View>
-            <View style={{ marginTop: 50 }}>
-              <TouchableOpacity onPress={() => onPressCategory(1)}>
-                <Text style={styles.text1}>VEGATABLES</Text>
-              </TouchableOpacity>
+            {searchList.length > 0 && <View style={{}}>
+              <ScrollView>
+                {
+                  searchList.map((ele, index) => {
+                    return (
+                      <View style={styles.item}>
+                        <Text>{ele.item_name}</Text>
+                        <Text>{ele.qty} {ele.unit}</Text>
+                      </View>
+                    )
+                  })
+                }
+              </ScrollView>
+            </View>}
+            <View style={{ marginTop: 5 }}>
+              <PrimaryButton expand={selectedCategory === 1} icon title={'VEGATABLES'} onPress={() => onPressCategory(1)} />
               {selectedCategory === 1 && (
                 <ViewItems />
               )}
-              <TouchableOpacity onPress={() => onPressCategory(2)}>
-                <Text style={styles.text1}>FRUITS</Text>
-              </TouchableOpacity>
+              <PrimaryButton  expand={selectedCategory === 2}  icon title={'FRUITS'} onPress={() => onPressCategory(2)} />
               {selectedCategory === 2 && (
                 <ViewItems />
               )}
-              <TouchableOpacity onPress={() => onPressCategory(3)}>
-                <Text style={styles.text1}>JUICES</Text>
-              </TouchableOpacity>
+              <PrimaryButton  expand={selectedCategory === 3}  icon title={'JUICES'} onPress={() => onPressCategory(3)} />
+
               {selectedCategory === 3 && (
                 <ViewItems />
               )}
-              <TouchableOpacity onPress={() => onPressCategory(4)}>
-                <Text style={styles.text1}>MEAT</Text>
-              </TouchableOpacity>
+              <PrimaryButton  expand={selectedCategory === 4}  icon title={'MEAT'} onPress={() => onPressCategory(4)} />
+
               {selectedCategory === 4 && (
                 <ViewItems />
               )}
-              <TouchableOpacity onPress={() => onPressCategory(5)}>
-                <Text style={styles.text1}>OTHERS</Text>
-              </TouchableOpacity>
+              <PrimaryButton  expand={selectedCategory === 5}  icon title={'OTHERS'} onPress={() => onPressCategory(5)} />
+
               {selectedCategory === 5 && (
                 <ViewItems />
               )}
             </View>
           </View>
         </ScrollView>
-        <Modal animationType="slide" visible={modalVisible}>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-            <TouchableOpacity
-              onPress={() => navigation.navigate('useView', serachVegetable)}>
-              <View
-                style={{
-                  backgroundColor: 'blue',
-                  width: 100,
-                  height: 30,
-                  margin: 20,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Text style={{ color: 'white', fontWeight: 'bold' }}>
-                  {serachVegetable?.foodname}
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-        </Modal>
       </ImageBackground>
     </View>
   );
 };
 const styles = StyleSheet.create({
   searchbar: {
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor:colors.black,
     marginTop: 20,
     borderRadius: 20,
-    backgroundColor: '#fff',
+    backgroundColor: colors.white,
     paddingHorizontal: 15,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -186,8 +153,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     borderRadius: 12,
     backgroundColor: '#DB2AB0',
-    color: '#fff',
-  }
+    color: colors.white,
+  },
+  item:{flexDirection: 'row', justifyContent: 'space-between', borderRadius: 10, backgroundColor: colors.white, paddingHorizontal: 15, paddingVertical: 8,marginTop:10 },
 });
 
 export default viewitem;

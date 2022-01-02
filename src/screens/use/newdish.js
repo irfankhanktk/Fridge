@@ -1,19 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     SafeAreaView, StyleSheet, Text, View, ToastAndroid,
     TextInput, ImageBackground, TouchableOpacity, ScrollView
 } from 'react-native';
 import { CheckBox } from 'react-native-elements'
+import FRIDGE_ACTIONS from '../../api/actions';
+import urls from '../../api/urls';
+import CustomHeader from '../../components/custom-header';
+import PrimaryButton from '../../components/primary-button';
 
-const newdish = () => {
-    const [checked, setchecked] = useState(false);
-    const [checked1, setchecked1] = useState(false);
-    const [checked2, setchecked2] = useState(false);
-    const [checked3, setchecked3] = useState(false);
-    const [checked4, setchecked4] = useState(false);
-    const [checked5, setchecked5] = useState(false);
-    const [checked6, setchecked6] = useState(false);
-    const [checked7, setchecked7] = useState(false);
+const newdish = (props) => {
+    const [checkedList, setCheckedList] = useState([]);
+    const [dishName,setDishName]=useState('');
 
     const Toast = () => {
         ToastAndroid.showWithGravityAndOffset(
@@ -24,73 +22,76 @@ const newdish = () => {
             130,
         )
     };
+    const getIngredients = async () => {
+        try {
+            const res = await FRIDGE_ACTIONS.getData(urls.ingradients);
+            console.log('res:', res?.data);
+            setCheckedList(res?.data);
+        } catch (error) {
+
+        }
+    }
+    const onSave=async()=>{
+       try {
+       
+           const ids=[];
+           checkedList.map(e=>{
+               if(e.isSelected){
+                 ids.push(e.id);
+               }
+           });
+           console.log(ids);
+           if(ids.length===0&&!dishName){
+               alert('You have not selected any ingredient or enter name');
+               return ;
+           }
+           const body =new FormData();
+           body.append('name',dishName);
+           body.append('ids',ids.join());
+           console.log('body:',body);
+        const res = await FRIDGE_ACTIONS.postData(`${urls.add_dish}`,body);
+        console.log('res of post dish:',res);
+       } catch (error) {
+           
+       }
+    }
+    useEffect(() => {
+        getIngredients();
+    }, [])
     return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <ScrollView>
-            <View>
-                <ImageBackground style={{ width: '100%', height: '100%' }}
-                    source={require('../../images/1.jpg')}>
-                    <View>
-                        <Text style={styles.text}>Name:</Text>
-                        <TextInput placeholder="Dish Name"
-                            style={{
-                                borderWidth: 1, width: "90%", height: 55,
-                                marginLeft: 20, padding: 14, borderRadius: 14,
-                                marginTop: 14, backgroundColor: '#fff'
-                            }} />
-                    </View>
-                    <Text style={styles.text}>Fridge Items:</Text>
-                    <ScrollView>
+                <View style={{flex:1}}>
+                    <ImageBackground style={{ width: '100%', height: '100%' }}
+                        source={require('../../images/1.jpg')}>
+                            <CustomHeader navigation={props.navigation} title={'Add Dish'} />
                         <View>
-                            <CheckBox
-                                title='Chicken'
-                                checked={checked}
-                                onPress={() => setchecked(!checked)}
-                            />
-                            <CheckBox
-                                title='Fish'
-                                checked={checked1}
-                                onPress={() => setchecked1(!checked1)}
-                            />
-                            <CheckBox
-                                title='Mutton'
-                                checked={checked2}
-                                onPress={() => setchecked2(!checked2)}
-                            />
-                            <CheckBox
-                                title='Beaf'
-                                checked={checked3}
-                                onPress={() => setchecked3(!checked3)}
-                            />
-                            <CheckBox
-                                title='Yogart'
-                                checked={checked4}
-                                onPress={() => setchecked4(!checked4)}
-                            />
-                            <CheckBox
-                                title='Palak'
-                                checked={checked5}
-                                onPress={() => setchecked5(!checked5)}
-                            />
-                            <CheckBox
-                                title='Patoto'
-                                checked={checked6}
-                                onPress={() => setchecked6(!checked6)}
-                            />
-                            <CheckBox
-                                title='tomato'
-                                checked={checked7}
-                                onPress={() => setchecked7(!checked7)}
-                            />
+                            <Text style={styles.text}>Name:</Text>
+                            <TextInput placeholder="Dish Name"
+                                style={{
+                                    borderWidth: 1, width: "90%", height: 55,
+                                    marginLeft: 20, padding: 14, borderRadius: 14,
+                                    marginTop: 14, backgroundColor: '#fff'
+                                }}
+                                onChangeText={setDishName}
+                                 />
                         </View>
-                    </ScrollView>
-                    <TouchableOpacity onPress={Toast}>
-                        <Text style={styles.button}>SAVE</Text>
-                    </TouchableOpacity>
-                </ImageBackground>
-            </View>
-            </ScrollView>
-        </SafeAreaView>
+                        <Text style={styles.text}>Fridge Items:</Text>
+                        <View style={{flex:1}}>
+                            <ScrollView>
+                                {checkedList.map((ele, index) => <CheckBox
+                                    title={ele.item_name}
+                                    checked={ele.isSelected}
+                                    onPress={() => {
+                                        ele.isSelected = !ele.isSelected;
+                                        const copy = [...checkedList];
+                                        copy[index] = ele;
+                                        setCheckedList(copy);
+                                    }}
+                                />)}
+                            </ScrollView>
+                        </View>
+                        <PrimaryButton style={{marginHorizontal:22,marginBottom:10}}  title={'SAVE'} onPress={onSave}/>
+                    </ImageBackground>
+                </View>
     )
 };
 const styles = StyleSheet.create({
