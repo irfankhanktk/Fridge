@@ -51,6 +51,7 @@ const newdish = (props) => {
            console.log('body:',body);
         const res = await FRIDGE_ACTIONS.postData(`${urls.add_dish}`,body);
         console.log('res of post dish:',res);
+        Toast();
        } catch (error) {
            
        }

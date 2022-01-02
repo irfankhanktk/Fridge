@@ -5,7 +5,7 @@ import { ImageBackground, StyleSheet, Text, ToastAndroid, TouchableOpacity, View
 import { TextInput } from 'react-native-gesture-handler';
 import FRIDGE_ACTIONS from '../../api/actions';
 import urls from '../../api/urls';
-import { juice, vegetable } from '../../assets';
+import { fruit, juice, meat, other, vegetable } from '../../assets';
 import CustomHeader from '../../components/custom-header';
 import DateTimePicker from '../../components/date-picker';
 import Icon from 'react-native-vector-icons/AntDesign'
@@ -64,7 +64,7 @@ const AddItem = ({ navigation,route }) => {
     <View style={{ flex: 1, backgroundColor: '#E0EED6', }}>
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
-        source={juice}>
+        source={category_id===1?vegetable:category_id===2?fruit:category_id===3?juice:category_id===4?meat:other}>
       <CustomHeader title={`Add ${title}`} navigation={navigation}/>
         <View style={{ ...styles.body }}>
           <View style={styles.row}>
