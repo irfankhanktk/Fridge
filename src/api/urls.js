@@ -12,5 +12,6 @@ export default{
    ingradients:'items/GetIngredients',
    //add new dish
    add_dish:'Dishes/AddDish',
+   cook_dish:'Dishes/CookDish?id=',
   
 }

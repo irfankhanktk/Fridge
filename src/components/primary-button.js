@@ -2,9 +2,9 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import colors from '../screens/colors';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-const PrimaryButton = ({ onPress, title,textStyle,style,icon,plus,expand=false}) => {
+const PrimaryButton = ({ onPress, title,textStyle,style,icon,plus,expand=false,disabled}) => {
     return (
-        <TouchableOpacity onPress={onPress} style={[styles.btn,style]}>
+        <TouchableOpacity onPress={onPress} disabled={disabled} style={[styles.btn,style]}>
             <Text style={[styles.text,textStyle]}>{title}</Text>
             {icon&& <AntDesign name={expand?'upcircleo':'downcircleo'} size={20} color={colors.white} style={{position:'absolute',right:15,top:15}}/>}
            {plus&& <AntDesign name={plus} size={20} color={colors.white} style={{position:'absolute',right:15,top:15}}/>}

@@ -1,24 +1,24 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, ImageBackground, StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import axios from 'axios';
+import React from 'react';
+import { StatusBar } from 'react-native';
 import ActionBarImage from './headerbar/Actionbar';
-import Home from './src/screens/Home';
+import urls from './src/api/urls';
 import Add from './src/screens/Add';
-import viewitem from './src/screens/viewitem';
-import notification from './src/screens/notification';
-import todaymeal from './src/screens/todaymeal';
+import Home from './src/screens/Home';
+import AddItem from './src/screens/navigation/add-item';
 import fruits from './src/screens/navigation/fruits';
 import juices from './src/screens/navigation/juices';
 import meat from './src/screens/navigation/meat';
 import other from './src/screens/navigation/other';
-import Vegatableview from './src/screens/view/Vegatableview';
-import useView from './src/screens/use/useView';
-import newdish from './src/screens/use/newdish';
-import axios from 'axios';
-import urls from './src/api/urls';
+import notification from './src/screens/notification';
 import SplashScreen from './src/screens/Splash';
-import AddItem from './src/screens/navigation/add-item';
+import todaymeal from './src/screens/todaymeal';
+import newdish from './src/screens/use/newdish';
+import useView from './src/screens/use/useView';
+import Vegatableview from './src/screens/view/Vegatableview';
+import viewitem from './src/screens/viewitem';
 
 //Axios Configuration
 client = axios.create({
@@ -105,50 +105,6 @@ function App() {
           component={useView}
           options={{
             title: 'Use',
-            headerTintColor: '#fff',
-            headerStyle: {
-              backgroundColor: '#7BF85F',
-            },
-          }}
-        />
-        <Stack.Screen
-          name="fruits"
-          component={fruits}
-          options={{
-            title: 'Add Fruit',
-            headerTintColor: '#fff',
-            headerStyle: {
-              backgroundColor: '#7BF85F',
-            },
-          }}
-        />
-        <Stack.Screen
-          name="juices"
-          component={juices}
-          options={{
-            title: 'Add Juice',
-            headerTintColor: '#fff',
-            headerStyle: {
-              backgroundColor: '#7BF85F',
-            },
-          }}
-        />
-        <Stack.Screen
-          name="meat"
-          component={meat}
-          options={{
-            title: 'Add Meat',
-            headerTintColor: '#fff',
-            headerStyle: {
-              backgroundColor: '#7BF85F',
-            },
-          }}
-        />
-        <Stack.Screen
-          name="other"
-          component={other}
-          options={{
-            title: 'Add Other Items',
             headerTintColor: '#fff',
             headerStyle: {
               backgroundColor: '#7BF85F',
