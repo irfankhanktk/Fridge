@@ -1,5 +1,5 @@
-export {default as vegetable} from './vegetable.jpg';
-export {default as fruit} from './fruits.png';
-export {default as juice} from './juice.png';
-export {default as meat} from './meat.png';
-export {default as other} from './drinks.jpg';
+export {default as vegetable} from './1.jpg';
+export {default as fruit} from './1.jpg';
+export {default as juice} from './123.jpg';
+export {default as meat} from './123.jpg';
+export {default as other} from './123.jpg';

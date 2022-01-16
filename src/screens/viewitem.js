@@ -66,7 +66,7 @@ const viewitem = ({ navigation }) => {
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
         source={require('../images/mff.jpg')}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1,paddingBottom:100 }}>
           <View style={{ paddingHorizontal: 22, flex: 1 }}>
             <View style={styles.searchbar}>
               <TextInput
