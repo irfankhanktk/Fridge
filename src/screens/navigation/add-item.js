@@ -172,8 +172,9 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   heading: {
-    fontWeight: 'bold', color: colors.white,
-    fontSize: 28,
+    fontWeight: 'bold', 
+    color: colors.black,
+    fontSize: 24,
     width: '30%',
   },
   picker_container: {
