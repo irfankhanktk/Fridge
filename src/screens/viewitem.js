@@ -1,7 +1,7 @@
-import React, {  useState } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet, View,
-  Text, ImageBackground, TextInput
+  Text, ImageBackground, TextInput, TouchableOpacity
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -11,21 +11,25 @@ import CustomHeader from '../components/custom-header';
 import PrimaryButton from '../components/primary-button';
 import colors from './colors';
 import moment from 'moment';
+import ReactNativeModal from 'react-native-modal';
 
 const viewitem = ({ navigation }) => {
 
   var [foodItemList, setFoodItemList] = useState([]);
   var [searchList, setSearchList] = useState([]);
   var [searchText, setSearchText] = useState('');
+  const [showModal,setShowModal]=React.useState(false)
+  const [useItem,setUseItem]=React.useState({})
   const [selectedCategory, setSelectedCategory] = useState(0);
 
+  const getViewItems=(category_id)=>FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0`);
   const onPressCategory = async (category_id = 1) => {
     if (selectedCategory === category_id) {
       setSelectedCategory(0);
       return;
     }
     try {
-      const res = await FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0`);
+      const res = await getViewItems(category_id);
       setSelectedCategory(category_id);
       setFoodItemList(res?.data);
     } catch (error) {
@@ -46,15 +50,38 @@ const viewitem = ({ navigation }) => {
       alert('Item Not Found');
     }
   };
-
+  const onUse=async(item)=>{
+    setUseItem({...item,available:item?.qty});
+    setShowModal(true);
+  }
+  const updateQty=async()=>{
+    try {
+      console.log(useItem.available-useItem?.qty);
+      // return;
+      setShowModal(false);
+      const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${useItem?.id}&qty=${useItem?.qty}&expiry=${useItem?.expiry_date}&isAdd=false`,);
+      console.log('res:of update: ', res);
+      const resp=await getViewItems(selectedCategory);
+      setFoodItemList(resp?.data);
+      // toast();
+    } catch (error) {
+      console.log(error)
+    }
+  }
   const ViewItems = () => (<View>
     {
       foodItemList.map((ele) => {
         return (
           <View style={styles.item}>
-            <Text numberOfLines={1} style={{ width: '40%', }}>{ele.item_name}</Text>
+            <View style={{  flexDirection: 'row', alignItems: 'center', width: '50%' }}>
+              <Text numberOfLines={1} style={{ width: '80%', }}>{ele.item_name}</Text>
+              <TouchableOpacity onPress={()=>onUse(ele)} style={{ paddingHorizontal: 5,borderRadius:5,backgroundColor: colors.primary,}}>
+                <Text style={{color:colors.white}}>Use</Text>
+              </TouchableOpacity>
+            </View>
             <Text >{ele.qty} {ele.unit}</Text>
             {ele.expiry_date && <Text>{moment(ele.expiry_date).format('ll')}</Text>}
+
           </View>
         )
       })
@@ -124,6 +151,24 @@ const viewitem = ({ navigation }) => {
           </View>
         </ScrollView>
       </ImageBackground>
+      <ReactNativeModal
+       onBackButtonPress={()=>setShowModal(false)}
+       onBackdropPress={()=>setShowModal(false)}
+       isVisible={showModal}>
+           <View style={{backgroundColor:colors.white,padding:20,borderRadius:20,height:200}}>
+             <Text>Enter your needed quantity in {useItem?.unit} </Text>
+             <TextInput
+              placeholder='Enter qty'
+              onChangeText={(t)=>{
+               console.log('bool: ',t<useItem.available);
+               setUseItem({
+                 ...useItem,
+                 qty:t<useItem.available?t:useItem.qty,
+               })
+             }} value={useItem?.qty+''}/>
+             <PrimaryButton onPress={updateQty} title={'Use'}/>
+           </View>
+      </ReactNativeModal>
     </View>
   );
 };

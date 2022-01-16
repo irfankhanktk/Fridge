@@ -1,11 +1,24 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, ImageBackground } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import FRIDGE_ACTIONS from '../api/actions';
+import urls from '../api/urls';
 import CustomHeader from '../components/custom-header';
 import colors from './colors';
 
 const Home = (props) => {
-
+   const [notificationsCountr,setNotificationsCounter]=React.useState();
+   const getNotiCounter=async()=>{
+       try {
+           const response = await FRIDGE_ACTIONS.getData(`${urls.notificationsCounter}`);
+           setNotificationsCounter(response?.data);
+       } catch (error) {
+           alert(error);
+       }
+   }
+   React.useEffect(()=>{
+    getNotiCounter();
+   },[])
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground style={{ width: '100%', height: '100%', flex: 1 }}
@@ -30,7 +43,12 @@ const Home = (props) => {
                     <TouchableOpacity onPress={() => props.navigation.navigate("notification")}
                         style={styles.button}>
                         <Icon name='bell' size={30} color={colors.white} style={{ marginRight: 8 }} />
-                        <Text style={styles.text}>NOTIFICATION</Text>
+                        <Text style={styles.text}>
+                             notificationsCountr
+                             </Text>
+                           {notificationsCountr&& <View style={{height:20,width:20,justifyContent:'center',alignItems:'center',backgroundColor:colors.secondary,position:'absolute',left:30,borderRadius:10,}}>
+                            <Text style={{color:colors.white,}}>{notificationsCountr}</Text>
+                            </View>}
                     </TouchableOpacity>
                 </View>
             </ImageBackground>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, ImageBackground, TextInput, ActivityIndicator, } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import ReactNativeModal from 'react-native-modal';
+import PushNotification from 'react-native-push-notification';
 import FRIDGE_ACTIONS from '../api/actions';
 import urls from '../api/urls';
 import CustomHeader from '../components/custom-header';
@@ -44,13 +45,32 @@ const todaymeal = (props) => {
         });
         setShowModal(true);
     }
+    const manageNotification=(obj)=>{
+        console.log('heloo');
+        PushNotification.localNotification({
+            channelId: "channel-id", 
+            title:`Sorry You cannot make ${obj?.title}`,
+            message:obj?.description,
+        });
+        // PushNotification.localNotificationSchedule({
+        //     channelId: "channel-id", 
+        //     title:'title is here',
+        //     message:'i am message after 20 sec',
+        //     date:new Date(Date.now()+20*1000),
+        //     allowWhileIdle:true,
+        // });
+    }
     const onOk = async () => {
         try {
             setLoading(true)
             setMessage(false);
             const res = await FRIDGE_ACTIONS.getData(`${urls.cook_dish}${dish.dish_id}&persons=${persons}`);
-            console.log('res:::', res?.data);
-            setMessage(res?.data);
+            console.log('res:::', res);
+            if(res?.status===201){
+                manageNotification(res?.data);
+            }else{
+                // setMessage(res?.data);
+            }
         } catch (error) {
             console.log('error::', error);
             alert('something went wrong');
@@ -73,7 +93,7 @@ const todaymeal = (props) => {
                                         style={{
                                             backgroundColor:colors.secondary,
                                             paddingVertical: 10, borderRadius: 10,marginHorizontal:40,
-                                            marginTop: 18, alignItems: 'center',width:'80%'
+                                            marginTop: 18, alignItems: 'center',
                                         }}>
                                         <Text style={{
                                             color: colors.primary, fontWeight: '800', height: 25, fontSize: 18
