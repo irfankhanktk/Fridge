@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View, Text, ImageBackground, SafeAreaView } from 'react-native';
+import { StyleSheet, View, ImageBackground } from 'react-native';
 import CustomHeader from '../components/custom-header';
 import PrimaryButton from '../components/primary-button';
 import colors from './colors';

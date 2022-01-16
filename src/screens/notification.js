@@ -11,7 +11,6 @@ const notification = ({ navigation }) => {
             <View>
                 <ImageBackground style={{ width: '100%', height: '100%' }}
                     source={require('../images/123.jpg')}>
-                    {/* <Text style={styles.text}>Food To Be Expired</Text> */}
                     <View style={{ flex: 1, marginTop: 30, }}>
                         <ScrollView contentContainerStyle={{ paddingHorizontal: 22, }}>
                             {
