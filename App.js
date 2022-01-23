@@ -6,14 +6,16 @@ import { StatusBar } from 'react-native';
 import PushNotification from 'react-native-push-notification';
 import urls from './src/api/urls';
 import Add from './src/screens/Add';
+import Signin from './src/screens/auth/signin';
+import Signup from './src/screens/auth/signup';
 import Home from './src/screens/Home';
 import AddItem from './src/screens/navigation/add-item';
 import notification from './src/screens/notification';
+import Pair from './src/screens/Pair';
 import SplashScreen from './src/screens/Splash';
 import todaymeal from './src/screens/todaymeal';
 import newdish from './src/screens/use/newdish';
 import useView from './src/screens/use/useView';
-import Vegatableview from './src/screens/view/Vegatableview';
 import viewitem from './src/screens/viewitem';
 
 //Axios Configuration
@@ -55,30 +57,12 @@ client.interceptors.response.use(
 );
 const Stack = createStackNavigator();
 function App() {
-  const manageNotification=()=>{
-    console.log('heloo');
-    // PushNotification.localNotification({
-    //     channelId: "channel-id", 
-    //     title:'title',
-    //     message:'i am message',
-    // });
-    // PushNotification.localNotificationSchedule({
-    //     channelId: "channel-id", 
-    //     title:'title is here',
-    //     message:'i am message after 20 sec',
-    //     date:new Date(Date.now()+20*1000),
-    //     allowWhileIdle:true,
-    // });
-}
   const createChannel=()=>{
     PushNotification.createChannel(
         {
           channelId: "channel-id", // (required)
           channelName: "Khan channel", // (required)
-        //   channelDescription: "A channel to categorise your notifications", // (optional) default: undefined.
-        //   playSound: false, // (optional) default: true
-        //   soundName: "default", // (optional) See `soundName` parameter of `localNotification` function
-        //   importance: Importance.HIGH, // (optional) default: Importance.HIGH. Int value of the Android notification importance
+      
           vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
         },
         (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
@@ -87,7 +71,6 @@ function App() {
 
   React.useEffect(()=>{
     createChannel();
-    manageNotification();
   },[])
   return (
 
@@ -100,11 +83,24 @@ function App() {
         networkActivityIndicatorVisible={false}>
       </StatusBar>
 
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        <Stack.Screen
+      <Stack.Navigator  screenOptions={{ headerShown: false }}>
+      <Stack.Screen
           name="SplashScreen"
-          component={SplashScreen}options={{ headerShown: false }}
+          component={SplashScreen}
         />
+        <Stack.Screen
+          name="Signin"
+          component={Signin}
+        />
+         <Stack.Screen
+          name="Pair"
+          component={Pair}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+        />
+       
         <Stack.Screen name="Home"component={Home}
         />
         <Stack.Screen
@@ -116,9 +112,7 @@ function App() {
         <Stack.Screen
           name="Add" component={Add}
         />
-        <Stack.Screen
-          name="Vegatableview"component={Vegatableview}
-        />
+       
         <Stack.Screen
           name="viewitem"component={viewitem}
         />

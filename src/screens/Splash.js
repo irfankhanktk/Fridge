@@ -1,10 +1,26 @@
 import React from 'react';
 import {View,Text, StyleSheet, ImageBackground, Image} from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
-    const SplashScreen=({ navigation })=> {
-        setTimeout(() => {
-          navigation.replace('Home');
-        }, 3000);
+
+const SplashScreen=({ navigation })=> {
+      const getData=async()=>{
+        const user = await AsyncStorage.getItem('@user');
+        if(user){
+          setTimeout(() => {
+            navigation.replace('Home');
+          }, 3000);
+        }else{
+          setTimeout(() => {
+            navigation.replace('Signin');
+          }, 3000);
+        }
+      }
+  React.useEffect(()=>{
+    getData();
+  },[])
+        
+       
         return (
           <View style={styles.logo}>
             <ImageBackground

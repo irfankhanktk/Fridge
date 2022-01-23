@@ -5,9 +5,12 @@ import FRIDGE_ACTIONS from '../api/actions';
 import urls from '../api/urls';
 import CustomHeader from '../components/custom-header';
 import colors from './colors';
+import  AsyncStorage  from '@react-native-async-storage/async-storage';
+
 
 const Home = (props) => {
    const [notificationsCountr,setNotificationsCounter]=React.useState();
+   const [user,setUser]=React.useState({});
    const getNotiCounter=async()=>{
        try {
            const response = await FRIDGE_ACTIONS.getData(`${urls.notificationsCounter}`);
@@ -17,19 +20,27 @@ const Home = (props) => {
        }
    }
    React.useEffect(()=>{
-    getNotiCounter();
+    // getNotiCounter();
+    (async()=>{
+        const user=await AsyncStorage.getItem('@user');
+        if(user){
+            setUser(JSON.parse(user));
+            console.log('JSON.parse(user):',JSON.parse(user));
+        }
+    })();
    },[])
     return (
         <View style={{ flex: 1 }}>
             <ImageBackground style={{ width: '100%', height: '100%', flex: 1 }}
                 source={require('../images/inside.jpg')}>
-                <CustomHeader backBtn={false} title={'Smart Fridge Food'} navigation={props.navigation} />
+                <CustomHeader user_name={user?.u_name} backBtn={false} title={'Smart Fridge Food'} navigation={props.navigation} />
                 <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 22 }}>
                     <TouchableOpacity onPress={() => props.navigation.navigate("Add")}
                         style={styles.button}>
                         <Icon name="shopping-bag" size={30} color={colors.white} />
                         <Text style={styles.text}>ADD</Text>
                     </TouchableOpacity>
+                   
                     <TouchableOpacity onPress={() => props.navigation.navigate("viewitem")}
                         style={styles.button}>
                         <Icon name="list" size={30} color={colors.white} />
@@ -49,6 +60,11 @@ const Home = (props) => {
                            {notificationsCountr&& <View style={{height:20,width:20,justifyContent:'center',alignItems:'center',backgroundColor:colors.secondary,position:'absolute',left:30,borderRadius:10,}}>
                             <Text style={{color:colors.white,}}>{notificationsCountr}</Text>
                             </View>}
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => props.navigation.navigate("Pair")}
+                        style={styles.button}>
+                        <Icon name="shopping-bag" size={30} color={colors.white} />
+                        <Text style={styles.text}>Pair</Text>
                     </TouchableOpacity>
                 </View>
             </ImageBackground>
