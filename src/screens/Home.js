@@ -37,7 +37,7 @@ const Home = (props) => {
                 <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 22 }}>
                     <TouchableOpacity onPress={() => props.navigation.navigate("Add")}
                         style={styles.button}>
-                        <Icon name="shopping-store" size={25} color={colors.white} />
+                        <Icon name="shopping-basket-add" size={30} color={colors.white} />
                         <Text style={styles.text}>ADD</Text>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => props.navigation.navigate("viewitem")}

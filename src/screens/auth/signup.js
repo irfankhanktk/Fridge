@@ -9,14 +9,14 @@ const Signup = (props) => {
     const [name, setName] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [cpassword, setCPassword] = React.useState('');
-    
-    const onSignup=async()=>{
-    
+
+    const onSignup = async () => {
+
         try {
-            if(password!==cpassword){
+            if (password !== cpassword) {
                 alert('passwords did not match')
             }
-            const res= await FRIDGE_ACTIONS.postFormData(urls.signup,{u_name:name,u_password:password});
+            const res = await FRIDGE_ACTIONS.postFormData(urls.signup, { u_name: name, u_password: password });
             alert('saved Successfully')
             props?.navigation?.pop();
         } catch (error) {
@@ -24,22 +24,24 @@ const Signup = (props) => {
         }
     }
 
-//    React.useEffect(()=>{
-    
-//    },[]);
+    //    React.useEffect(()=>{
+
+    //    },[]);
 
 
     return (
         <View style={{ flex: 1 }}>
             <CustomHeader navigation={props.navigation} title={'Sign Up'} />
             <View style={styles.body}>
-            <ScrollView contentContainerStyle={{flexGrow:1,paddingHorizontal:22,}}>
-                <CustomInput placeholder={'Enter name'} value={name} onChangeText={setName} />
-                <CustomInput placeholder={'Enter password'} value={password} onChangeText={setPassword} />
-                <CustomInput placeholder={'Enter password'} value={cpassword} onChangeText={setCPassword} />
-                <PrimaryButton onPress={onSignup} style={{marginTop:100}} title={'Signup'}/>
-                <Text onPress={()=>props?.navigation?.pop()} style={{textDecorationLine:'underline',marginTop:30,alignSelf:'center'}}>Already have an account? Sigin</Text>
-            </ScrollView>
+                <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 22, }}>
+                    <CustomInput placeholder={'Enter name'} value={name} onChangeText={setName} />
+                    <CustomInput placeholder={'Enter password'} value={password} onChangeText={setPassword} />
+                    <CustomInput placeholder={'Enter password'} value={cpassword} onChangeText={setCPassword} />
+                    <PrimaryButton onPress={onSignup} style={{ marginTop: 100 }} title={'Signup'} />
+                    <Text onPress={() => props?.navigation?.pop()}
+                        style={{ textDecorationLine: 'underline', marginTop: 30, alignSelf: 'center' }}>
+                        Already have an account? Sigin</Text>
+                </ScrollView>
             </View>
         </View>
     );
@@ -48,6 +50,6 @@ export default Signup;
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        paddingTop:100,
+        paddingTop: 100,
     }
 });

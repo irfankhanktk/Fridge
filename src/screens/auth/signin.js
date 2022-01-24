@@ -13,12 +13,12 @@ const Signin = (props) => {
 
     const onSignin = async () => {
         try {
-            const res= await FRIDGE_ACTIONS.postFormData(urls.signin,{u_name:name,u_password:password});
-            if(res?.data==="Password or UserName is incorrect"){
+            const res = await FRIDGE_ACTIONS.postFormData(urls.signin, { u_name: name, u_password: password });
+            if (res?.data === "Password or UserName is incorrect") {
                 alert(res?.data);
                 return;
             }
-            await AsyncStorage.setItem('@user',JSON.stringify(res?.data));
+            await AsyncStorage.setItem('@user', JSON.stringify(res?.data));
             props?.navigation?.replace('Home');
         } catch (error) {
             alert(error);
@@ -37,7 +37,9 @@ const Signin = (props) => {
                     <CustomInput placeholder={'Enter name'} value={name} onChangeText={setName} />
                     <CustomInput placeholder={'Enter password'} value={password} onChangeText={setPassword} />
                     <PrimaryButton onPress={onSignin} style={{ marginTop: 100 }} title={'Signin'} />
-                    <Text onPress={() => props?.navigation.navigate('Signup')} style={{ textDecorationLine: 'underline', marginTop: 30, alignSelf: 'center' }}>Do you have an account? signup</Text>
+                    <Text onPress={() => props?.navigation.navigate('Signup')}
+                        style={{ textDecorationLine: 'underline', marginTop: 30, alignSelf: 'center' }}>
+                        Do you have an account? signup</Text>
                 </ScrollView>
             </View>
         </View>
