@@ -6,6 +6,7 @@ import moment from 'moment';
 import colors from './colors';
 import urls from '../api/urls';
 import FRIDGE_ACTIONS from '../api/actions';
+
 const notification = ({ navigation }) => {
     const [notifications, setNotifications] = React.useState([]);
     const getNotifications = async () => {
