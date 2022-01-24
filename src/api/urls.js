@@ -1,25 +1,25 @@
-export default{
-   base_url:'http://192.168.100.3/Fridge_API/api',
-   signin:'Auth/Signin',
-   signup:'Auth/Signup',
-
-   users:'Pair/GetUsers?id=',
-   pair_user:'Pair/PairUser',
+export default {
+   base_url: 'http://192.168.43.137/Fridge_API/api',
+   // 192.168.43.137 mobile ip
+   signin: 'Auth/Signin',
+   signup: 'Auth/Signup',
+   users: 'Pair/GetUsers?id=',
+   pair_user: 'Pair/PairUser',
    //get cateogries item by category id
-   get_items_by_cat_id:'items/getitems?category_id=',
+   get_items_by_cat_id: 'items/getitems?category_id=',
    //update qty of items
-   update_item:'items/update_item',
+   update_item: 'items/update_item',
    //search item
-   search_item:'items/SearchItem?text=',
+   search_item: 'items/SearchItem?text=',
    //search item
-   ingradients:'items/GetIngredients',
+   ingradients: 'items/GetIngredients',
    //add new dish
-   add_dish:'Dishes/AddDish',
+   add_dish: 'Dishes/AddDish',
    //cookdish clear
-   cook_dish:'Dishes/CookDish?id=',
+   cook_dish: 'Dishes/CookDish?id=',
    //get notifications
-   notifications:'notifications/Getnotifications',
+   notifications: 'notifications/Getnotifications',
    //get counter
-   notificationsCounter:'notifications/GetNotificationsCounter',
-  
+   notificationsCounter: 'notifications/GetNotificationsCounter',
+
 }

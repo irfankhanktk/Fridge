@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ImageBackground, Text, SafeAreaView, ScrollView } from 'react-native';
+import { StyleSheet, View, ImageBackground, Text, ScrollView } from 'react-native';
 import CustomHeader from '../components/custom-header';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import moment from 'moment';
@@ -26,16 +26,23 @@ const notification = ({ navigation }) => {
                 <ImageBackground style={{ width: '100%', height: '100%' }}
                     source={require('../images/123.jpg')}>
                     <View style={{ flex: 1, marginTop: 30, }}>
-                        <ScrollView contentContainerStyle={{ paddingHorizontal: 10, }}>
+                        <ScrollView contentContainerStyle={{ paddingHorizontal: 14 }}>
                             {
                                 notifications?.map((ele) =>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: 'transparent', borderWidth: StyleSheet.hairlineWidth, paddingHorizontal:10, paddingVertical: 10, marginTop: 20, borderRadius: 20 }}>
-                                        <Icon name='circle-notifications' size={30} color={colors.primary} />
-                                        <View style={{paddingLeft:10,width:'70%'}}>
+                                    <View style={{
+                                        flexDirection: 'row', justifyContent: 'space-between',
+                                        //backgroundColor: 'white',
+                                         borderWidth: StyleSheet.hairlineWidth,
+                                        paddingHorizontal: 10, paddingVertical: 10, marginTop: 20, borderRadius: 20
+                                    }}>
+                                        <Icon name='circle-notifications' size={30} color={colors.black} />
+                                        <View style={{ paddingLeft: 10, width: '70%' }}>
                                             <Text>{ele?.title}</Text>
                                             <Text style={{ flex: 1, marginLeft: 10 }}>{ele?.description}</Text>
                                         </View>
-                                        <Text style={{width:'20%',textAlign:'center'}}>{moment(ele?.created_at).fromNow().toLocaleString()}</Text>
+                                        <Text style={{ width: '20%', textAlign: 'center' }}>
+                                        {moment(ele?.created_at).fromNow().toLocaleString()}
+                                        </Text>
                                     </View>
                                 )}
                         </ScrollView>
