@@ -57,21 +57,21 @@ client.interceptors.response.use(
 );
 const Stack = createStackNavigator();
 function App() {
-  const createChannel=()=>{
+  const createChannel = () => {
     PushNotification.createChannel(
-        {
-          channelId: "channel-id", // (required)
-          channelName: "Khan channel", // (required)
-      
-          vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
-        },
-        (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
-      );
-}
+      {
+        channelId: "channel-id", // (required)
+        channelName: "Khan channel", // (required)
 
-  React.useEffect(()=>{
+        vibrate: true, // (optional) default: true. Creates the default vibration patten if true.
+      },
+      (created) => console.log(`createChannel returned '${created}'`) // (optional) callback returns whether the channel was created, false means it already existed.
+    );
+  }
+
+  React.useEffect(() => {
     createChannel();
-  },[])
+  }, [])
   return (
 
     <NavigationContainer>
@@ -83,47 +83,43 @@ function App() {
         networkActivityIndicatorVisible={false}>
       </StatusBar>
 
-      <Stack.Navigator  screenOptions={{ headerShown: false }}>
-      <Stack.Screen
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
         />
         <Stack.Screen
-          name="Signin"
-          component={Signin}
-        />
-         <Stack.Screen
-          name="Pair"
-          component={Pair}
+          name="Signin" component={Signin}
         />
         <Stack.Screen
-          name="Signup"
-          component={Signup}
-        />
-       
-        <Stack.Screen name="Home"component={Home}
+          name="Pair" component={Pair}
         />
         <Stack.Screen
-          name="addItem"component={AddItem}
+          name="Signup" component={Signup}
+        />
+        <Stack.Screen name="Home" component={Home}
         />
         <Stack.Screen
-          name="useView"component={useView}
+          name="addItem" component={AddItem}
+        />
+        <Stack.Screen
+          name="useView" component={useView}
         />
         <Stack.Screen
           name="Add" component={Add}
         />
-       
+
         <Stack.Screen
-          name="viewitem"component={viewitem}
+          name="viewitem" component={viewitem}
         />
         <Stack.Screen
-          name="notification"component={notification}
+          name="notification" component={notification}
         />
         <Stack.Screen
-          name="todaymeal"component={todaymeal}
+          name="todaymeal" component={todaymeal}
         />
         <Stack.Screen
-          name="newdish"component={newdish}
+          name="newdish" component={newdish}
         />
       </Stack.Navigator>
     </NavigationContainer>

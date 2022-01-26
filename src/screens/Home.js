@@ -7,7 +7,6 @@ import CustomHeader from '../components/custom-header';
 import colors from './colors';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 const Home = (props) => {
     const [notificationsCountr, setNotificationsCounter] = React.useState();
     const [user, setUser] = React.useState({});
@@ -54,7 +53,7 @@ const Home = (props) => {
                         style={styles.button}>
                         <Icon name='bell' size={30} color={colors.white} style={{ marginRight: 8 }} />
                         <Text style={styles.text}>
-                          NOIFICATIONS
+                            NOIFICATIONS
                         </Text>
                         {notificationsCountr && <View style={{ height: 20, width: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, position: 'absolute', left: 30, borderRadius: 10, }}>
                             <Text style={{ color: colors.white, }}>{notificationsCountr}</Text>
@@ -96,6 +95,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 20,
         color: colors.white,
+        //fontFamily:'MuseoModerno-VariableFont_wght'
     }
 });
 

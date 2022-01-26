@@ -12,10 +12,9 @@ import colors from './colors';
 const todaymeal = (props) => {
     
     const [dishes, setDishes] = useState([]);
-    const [persons, setPersons] = React.useState('4');
+    const [persons, setPersons] = React.useState('5');
     const [loading, setLoading] = React.useState(false);
     const [message, setMessage] = React.useState(false);
-
     const [dish, setDish] = React.useState({
         dish_name: '',
         dish_id: '',
@@ -49,7 +48,7 @@ const todaymeal = (props) => {
         console.log('heloo');
         PushNotification.localNotification({
             channelId: "channel-id", 
-            title:`Sorry You cannot make ${obj?.title}`,
+            title:`You cannot make ${obj?.title}`,
             message:obj?.description,
         });
         // PushNotification.localNotificationSchedule({
@@ -110,28 +109,24 @@ const todaymeal = (props) => {
             <ReactNativeModal
                 backdropOpacity={0.2}
                 visible={showModal}
-                style={{ margin: 0 }}
+                style={{ margin: 0}}
             >
-                <View style={{ alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20, backgroundColor: colors.white }}>
-                    <Text style={{ alignSelf: 'center', fontSize: 18 }}>Are you sure to Cook {dish.dish_name}</Text>
+                <View style={{ alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20, backgroundColor:colors.tertiary }}>
+                    <Text style={{ alignSelf: 'center', fontSize: 17 }}>Are you sure to Cook {dish.dish_name}?</Text>
                     <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 10, width: '70%' }}>No. Of People</Text>
                     <TextInput editable={!loading} value={persons} onChangeText={setPersons} keyboardType='number-pad'
-
                         style={{
                             alignSelf: 'center', width: '70%', paddingHorizontal: 15,
                             borderWidth: StyleSheet.hairlineWidth, paddingVertical: 5,
                             marginTop: 10, borderRadius: 10
                         }} placeholder='No. of people' />
-
                     {loading && <ActivityIndicator style={{ alignSelf: 'center', marginTop: 30 }} size={'small'} color={colors.primary} />}
                     {message && <Text style={{ alignSelf: 'center', marginTop: 10, height: 70, color: 'red' }}>{message}</Text>}
                     <View style={{ position: 'absolute', bottom: 20, alignSelf: 'center', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
                         <PrimaryButton disabled={loading} onPress={onOk} title={'OK'} style={{ width: '45%' }} />
-
                         <PrimaryButton disabled={loading} onPress={() => { setShowModal(false); setMessage(false) }}
                             textStyle={{ color: colors.black }} title={'Cancel'}
                             style={{ width: '45%', backgroundColor: colors.white, borderWidth: StyleSheet.hairlineWidth }} />
-
                     </View>
                 </View>
             </ReactNativeModal>
