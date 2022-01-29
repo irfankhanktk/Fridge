@@ -59,13 +59,6 @@ const todaymeal = (props) => {
             title: `You cannot make ${obj?.title}`,
             message: obj?.description,
         });
-        // PushNotification.localNotificationSchedule({
-        //     channelId: "channel-id", 
-        //     title:'title is here',
-        //     message:'i am message after 20 sec',
-        //     date:new Date(Date.now()+20*1000),
-        //     allowWhileIdle:true,
-        // });
     }
     const onOk = async () => {
         try {
