@@ -10,10 +10,12 @@ import CustomHeader from '../../components/custom-header';
 import PrimaryButton from '../../components/primary-button';
 import colors from '../colors';
 import Icon from 'react-native-vector-icons/AntDesign'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const newdish = (props) => {
     const [checkedList, setCheckedList] = useState([]);
     const [dishName, setDishName] = useState('');
-
+    const [user, setUser] = React.useState({});
     const Toast = () => {
         ToastAndroid.showWithGravityAndOffset(
             'Dish Saved',
@@ -23,6 +25,18 @@ const newdish = (props) => {
             130,
         )
     };
+
+
+    React.useEffect(() => {
+        // getNotiCounter();
+        (async () => {
+            const user = await AsyncStorage.getItem('@user');
+            if (user) {
+                setUser(JSON.parse(user));
+                console.log('JSON.parse(user):', JSON.parse(user));
+            }
+        })();
+    }, [])
     const getIngredients = async () => {
         try {
             const res = await FRIDGE_ACTIONS.getData(urls.ingradients);
@@ -34,7 +48,6 @@ const newdish = (props) => {
     }
     const onSave = async () => {
         try {
-
             const ids = [];
             const qts=[];
             checkedList.map(e => {
@@ -51,6 +64,7 @@ const newdish = (props) => {
             body.append('name', dishName);
             body.append('ids', ids.join());
             body.append('item_qtys', qts.join());
+            body.append('user_id',user?.id);
             console.log('body:', body);
             const res = await FRIDGE_ACTIONS.postData(`${urls.add_dish}`, body);
             console.log('res of post dish:', res);

@@ -13,7 +13,7 @@ import AddItem from './src/screens/navigation/add-item';
 import notification from './src/screens/notification';
 import Pair from './src/screens/Pair';
 import SplashScreen from './src/screens/Splash';
-import todaymeal from './src/screens/todaymeal';
+import todaymeal from './src/screens/dishes';
 import newdish from './src/screens/use/newdish';
 import useView from './src/screens/use/useView';
 import viewitem from './src/screens/viewitem';

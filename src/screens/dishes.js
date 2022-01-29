@@ -8,13 +8,15 @@ import urls from '../api/urls';
 import CustomHeader from '../components/custom-header';
 import PrimaryButton from '../components/primary-button';
 import colors from './colors';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const todaymeal = (props) => {
-    
+
     const [dishes, setDishes] = useState([]);
     const [persons, setPersons] = React.useState('5');
     const [loading, setLoading] = React.useState(false);
     const [message, setMessage] = React.useState(false);
+    const [user, setUser] = React.useState({});
+
     const [dish, setDish] = React.useState({
         dish_name: '',
         dish_id: '',
@@ -23,11 +25,17 @@ const todaymeal = (props) => {
 
     const getDishes = async () => {
         try {
-            const res = await FRIDGE_ACTIONS.getData('Dishes/Getdishes');
-            console.log('res: ', res?.data);
-            setDishes(res?.data)
-        } catch (error) {
 
+            let user = await AsyncStorage.getItem('@user');
+            if (user) {
+                user=JSON.parse(user);
+                setUser(user);
+                const res = await FRIDGE_ACTIONS.getData(`Dishes/Getdishes?user_id=${user?.id}`);
+                console.log('res: ', res?.data);
+                setDishes(res?.data)
+            }
+        } catch (error) {
+           alert(error);
         }
     }
     useEffect(() => {
@@ -44,12 +52,12 @@ const todaymeal = (props) => {
         });
         setShowModal(true);
     }
-    const manageNotification=(obj)=>{
+    const manageNotification = (obj) => {
         console.log('heloo');
         PushNotification.localNotification({
-            channelId: "channel-id", 
-            title:`You cannot make ${obj?.title}`,
-            message:obj?.description,
+            channelId: "channel-id",
+            title: `You cannot make ${obj?.title}`,
+            message: obj?.description,
         });
         // PushNotification.localNotificationSchedule({
         //     channelId: "channel-id", 
@@ -63,11 +71,11 @@ const todaymeal = (props) => {
         try {
             setLoading(true)
             setMessage(false);
-            const res = await FRIDGE_ACTIONS.getData(`${urls.cook_dish}${dish.dish_id}&persons=${persons}`);
+            const res = await FRIDGE_ACTIONS.getData(`${urls.cook_dish}${dish.dish_id}&persons=${persons}&user_id=${user?.id}`);
             console.log('res:::', res);
-            if(res?.status===201){
+            if (res?.status === 201) {
                 manageNotification(res?.data);
-            }else{
+            } else {
                 // setMessage(res?.data);
             }
         } catch (error) {
@@ -90,8 +98,8 @@ const todaymeal = (props) => {
                                 return (
                                     <TouchableOpacity onPress={() => onPressDish(e)}
                                         style={{
-                                            backgroundColor:colors.secondary,
-                                            paddingVertical: 10, borderRadius: 10,marginHorizontal:40,
+                                            backgroundColor: colors.secondary,
+                                            paddingVertical: 10, borderRadius: 10, marginHorizontal: 40,
                                             marginTop: 18, alignItems: 'center',
                                         }}>
                                         <Text style={{
@@ -109,9 +117,9 @@ const todaymeal = (props) => {
             <ReactNativeModal
                 backdropOpacity={0.2}
                 visible={showModal}
-                style={{ margin: 0}}
+                style={{ margin: 0 }}
             >
-                <View style={{ alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20, backgroundColor:colors.tertiary }}>
+                <View style={{ alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20, backgroundColor: colors.tertiary }}>
                     <Text style={{ alignSelf: 'center', fontSize: 17 }}>Are you sure to Cook {dish.dish_name}?</Text>
                     <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 10, width: '70%' }}>No. Of People</Text>
                     <TextInput editable={!loading} value={persons} onChangeText={setPersons} keyboardType='number-pad'

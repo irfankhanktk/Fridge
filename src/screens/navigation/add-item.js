@@ -10,7 +10,7 @@ import CustomHeader from '../../components/custom-header';
 import DateTimePicker from '../../components/date-picker';
 import Icon from 'react-native-vector-icons/AntDesign'
 import colors from '../colors';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const AddItem = ({ navigation, route }) => {
   const { category_id = 1, title } = route.params;
   const [items, setItems] = React.useState([]);
@@ -19,7 +19,7 @@ const AddItem = ({ navigation, route }) => {
   const [weight, setWeight] = useState();
   const [expiryDate, setExpiryDate] = useState('');
   const [isDatePickerVisible, setDatePickerVisibility] = React.useState(false)
-
+  const [user, setUser] = React.useState({});
 
 
   const hideDatePicker = (date) => {
@@ -50,10 +50,21 @@ const AddItem = ({ navigation, route }) => {
       }
     })();
   }, [category_id]);
+
+  React.useEffect(() => {
+   
+    (async () => {
+        const user = await AsyncStorage.getItem('@user');
+        if (user) {
+            setUser(JSON.parse(user));
+            console.log('JSON.parse(user):', JSON.parse(user));
+        }
+    })();
+}, [])
   const onAdd = async () => {
     try {
 
-      const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${selectItemId}&qty=${weight}&expiry=${expiryDate}`,);
+      const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${selectItemId}&qty=${weight}&expiry=${expiryDate}&user_id=${user?.id}`,);
       console.log('res:', res);
       toast();
     } catch (error) {
@@ -77,8 +88,9 @@ const AddItem = ({ navigation, route }) => {
                 selectedValue={selectItemId}
                 style={{ borderRadius: 20, }}
                 onValueChange={(itemValue, index) => {
+                  console.log('index:',items[index-1]);
                   setSelectedItemId(itemValue);
-                  setUnit(items[index]?.unit);
+                  setUnit(items[index-1]?.unit);
                 }}>
                 {console.log('items:', items)}
                 <Picker.Item label="Select" value="select" />

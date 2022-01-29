@@ -12,7 +12,7 @@ import PrimaryButton from '../components/primary-button';
 import colors from './colors';
 import moment from 'moment';
 import ReactNativeModal from 'react-native-modal';
-
+import AsyncStorage from '@react-native-async-storage/async-storage'
 const viewitem = ({ navigation }) => {
 
   var [foodItemList, setFoodItemList] = useState([]);
@@ -21,8 +21,10 @@ const viewitem = ({ navigation }) => {
   const [showModal,setShowModal]=React.useState(false)
   const [useItem,setUseItem]=React.useState({})
   const [selectedCategory, setSelectedCategory] = useState(0);
+  const [user, setUser] = React.useState({});
 
-  const getViewItems=(category_id)=>FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0`);
+  const getViewItems=(category_id)=>FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0&user_id=${user?.id}`);
+
   const onPressCategory = async (category_id = 1) => {
     if (selectedCategory === category_id) {
       setSelectedCategory(0);
@@ -37,11 +39,20 @@ const viewitem = ({ navigation }) => {
       setSelectedCategory(0);
     }
   }
-
+  React.useEffect(() => {
+    // getNotiCounter();
+    (async () => {
+        const user = await AsyncStorage.getItem('@user');
+        if (user) {
+            setUser(JSON.parse(user));
+            console.log('JSON.parse(user):', JSON.parse(user));
+        }
+    })();
+}, [])
   const valueSeacrch = async () => {
     try {
       // const res=await FRIDGE_ACTIONS.getData(urls.search_item+searchText);
-      const res = await FRIDGE_ACTIONS.getData(`${urls.search_item}${searchText}`);
+      const res = await FRIDGE_ACTIONS.getData(`${urls.search_item}${searchText}&user_id=${user?.id}`);
       console.log('res of search : ', res?.data);
       setSearchList(res?.data);
 
@@ -59,7 +70,8 @@ const viewitem = ({ navigation }) => {
       console.log(useItem.available-useItem?.qty);
       // return;
       setShowModal(false);
-      const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${useItem?.id}&qty=${useItem?.qty}&expiry=${useItem?.expiry_date}&isAdd=false`,);
+     
+      const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${useItem?.id}&qty=${useItem?.qty}&expiry=${useItem?.expiry_date}&isAdd=false&user_id=${user?.id}`,);
       console.log('res:of update: ', res);
       const resp=await getViewItems(selectedCategory);
       setFoodItemList(resp?.data);
