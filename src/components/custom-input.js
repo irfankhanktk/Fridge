@@ -12,7 +12,10 @@ const CustomInput = ({
 export default CustomInput;
 const styles = StyleSheet.create({
     txt_input: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        marginBottom:20,
+       // borderBottomWidth: StyleSheet.hairlineWidth,
+       borderWidth:1,
+       borderRadius:20,
+       marginBottom:22,
+       paddingLeft:14,
     }
 });

@@ -1,6 +1,7 @@
 export default {
-   base_url: 'http://192.168.43.137/Fridge_API/api',
+   base_url: 'http://192.168.100.56/Fridge_API/api',
    // 192.168.43.137 mobile ip
+   //192.168.100.56 irfan ip
    signin: 'Auth/Signin',
    signup: 'Auth/Signup',
    users: 'Pair/GetUsers?id=',
