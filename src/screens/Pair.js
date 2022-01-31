@@ -17,7 +17,7 @@ const Pair = ({navigation}) => {
     let user = await AsyncStorage.getItem('@user');
     if (user) {
       user = JSON.parse(user);
-       const res= await FRIDGE_ACTIONS.getData(`${urls.pair_user}?user_id=${item?.user_id}&pair_id=${user?.id}`);
+       const res= await FRIDGE_ACTIONS.getData(`${urls.pair_user}?user_id=${user?.id}&pair_id=${item?.user_id}`);
        setUsers(res?.data);
     }
    } catch (error) {
