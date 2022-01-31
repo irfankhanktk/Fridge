@@ -1,6 +1,6 @@
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { View, Text, StyleSheet,TextInput,Image } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Image } from 'react-native';
 import FRIDGE_ACTIONS from '../../api/actions';
 import urls from '../../api/urls';
 import CustomInput from '../../components/custom-input';
@@ -25,26 +25,28 @@ const Signin = (props) => {
             alert(error);
         }
     }
-
     //    React.useEffect(()=>{
-
     //    },[]);
-
-
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.body}>
+                <View style={{ flexDirection: 'row' }}>
+                    <Text style={{ fontSize: 28, color: 'indigo', fontWeight: '800', marginLeft: 50 }}>Welcome To </Text>
+                    <Text style={{ fontSize: 28, color: '#9C27B0', fontWeight: '800' }}>My Fridge</Text>
+                </View>
+                <Image source={require('../../images/fridgeicon.png')}
+                    style={{ width: 100, height: 100, marginBottom: 50, marginHorizontal: 150, marginTop: 20 }}
+                />
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 25, }}>
-                    {/* <Image source={require('../images/mff.jpg')}/> */}
                     <TextInput placeholder={'Enter name'} value={name} onChangeText={setName}
-                     style={{borderWidth:1,borderRadius:20,paddingLeft:18}} />
-                    <TextInput placeholder={'Enter password'} value={password} onChangeText={setPassword}
-                    style={{borderWidth:1,marginTop:25,borderRadius:20,paddingLeft:18}}
+                        style={{ borderWidth: 1, borderRadius: 20, paddingLeft: 18 }} />
+                    <TextInput placeholder={'Enter password'} secureTextEntry={true} value={password} onChangeText={setPassword}
+                        style={{ borderWidth: 1, marginTop: 18, borderRadius: 20, paddingLeft: 18 }}
                     />
-                    <PrimaryButton onPress={onSignin} style={{ marginTop: 80, }} title={'Sign in'} />
+                    <PrimaryButton onPress={onSignin} style={{ marginTop: 50, }} title={'Sign In'} />
                     <Text onPress={() => props?.navigation.navigate('Signup')}
-                        style={{ textDecorationLine: 'underline', marginTop: 20, alignSelf: 'center',fontSize:17 }}>
-                        Do you have an account? signup</Text>
+                        style={{ textDecorationLine: 'underline', marginTop: 20, alignSelf: 'center', fontSize: 18, fontWeight: '800' }}>
+                        Do Not Have An Account? SignUp</Text>
                 </ScrollView>
             </View>
         </View>
@@ -54,6 +56,6 @@ export default Signin;
 const styles = StyleSheet.create({
     body: {
         flex: 1,
-        paddingTop: 270,
+        paddingTop: 100,
     }
 });
