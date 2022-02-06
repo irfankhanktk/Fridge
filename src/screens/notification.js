@@ -6,13 +6,20 @@ import moment from 'moment';
 import colors from './colors';
 import urls from '../api/urls';
 import FRIDGE_ACTIONS from '../api/actions';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const notification = ({ navigation }) => {
     const [notifications, setNotifications] = React.useState([]);
     const getNotifications = async () => {
         try {
-            const response = await FRIDGE_ACTIONS.getData(`${urls.notifications}`);
-            setNotifications(response?.data);
+            let user = await AsyncStorage.getItem('@user');
+            if (user) {
+                console.log('JSON.parse(user):', JSON.parse(user));
+                user= JSON.parse(user);
+                const response = await FRIDGE_ACTIONS.getData(`${urls.notifications}?user_id=${user?.id}`);
+
+                setNotifications(response?.data);
+            }
         } catch (error) {
             alert(error);
         }
