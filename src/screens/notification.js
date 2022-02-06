@@ -24,6 +24,8 @@ const notification = ({ navigation }) => {
             alert(error);
         }
     }
+
+    
     React.useEffect(() => {
         getNotifications();
     }, [])
