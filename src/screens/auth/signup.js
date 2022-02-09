@@ -33,13 +33,13 @@ const Signup = (props) => {
             <CustomHeader navigation={props.navigation} title={'Sign Up'} />
             <View style={styles.body}>
                 <ScrollView contentContainerStyle={{ flexGrow: 1, paddingHorizontal: 22, }}>
-                    <Text style={{ fontSize: 25, color: 'indigo', fontWeight: '800', marginBottom: 30, marginHorizontal: 120 }}>SIGN UP </Text>
-                    <CustomInput placeholder={'Enter name'} value={name} onChangeText={setName} />
+                    <Text style={{ fontSize: 25, color: 'indigo', fontWeight: '800', marginBottom: 30, marginHorizontal: 100 }}>SIGN UP </Text>
+                    <CustomInput placeholder={'User name'} value={name} onChangeText={setName} />
                     <CustomInput placeholder={'Enter password'} secureTextEntry={true} value={password} onChangeText={setPassword} />
-                    <CustomInput placeholder={'Enter password'} secureTextEntry={true} value={cpassword} onChangeText={setCPassword} />
+                    <CustomInput placeholder={'Conform password'} secureTextEntry={true} value={cpassword} onChangeText={setCPassword} />
                     <PrimaryButton onPress={onSignup} style={{ marginTop: 70 }} title={'Signup'} />
                     <View style={{ flexDirection: 'row' }}>
-                        <Text style={{ textDecorationLine: 'underline', marginTop: 30, alignSelf: 'center', fontSize: 17, marginHorizontal: 30,fontWeight:'800'  }} >Already Have An Account ? </Text>
+                        <Text style={{ textDecorationLine: 'underline', marginTop: 30, alignSelf: 'center', fontSize: 17, marginHorizontal:20,fontWeight:'800'  }} >Already Have An Account ? </Text>
                         <Text onPress={() => props?.navigation?.pop()}
                             style={{ textDecorationLine: 'underline', marginTop: 30, fontSize: 17, color: 'red', fontWeight: '800' }}>
                             Sign in</Text>

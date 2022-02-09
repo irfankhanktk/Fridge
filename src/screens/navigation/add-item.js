@@ -83,7 +83,7 @@ const AddItem = ({ navigation, route }) => {
               Food
             </Text>
             <View
-              style={{ ...styles.picker_container, borderRadius: 20, backgroundColor: colors.white, }}>
+              style={{ ...styles.picker_container, borderRadius: 20, backgroundColor: colors.white,borderWidth:1 }}>
               <Picker
                 selectedValue={selectItemId}
                 style={{ borderRadius: 20, }}
@@ -106,7 +106,9 @@ const AddItem = ({ navigation, route }) => {
               Weight
             </Text>
             <View
-              style={{ ...styles.picker_container, ...styles.row, marginTop: 0, borderRadius: 20, justifyContent: 'space-between', paddingHorizontal: 10, backgroundColor: colors.white, }}>
+              style={{ ...styles.picker_container, ...styles.row, marginTop: 0, borderRadius: 20,
+               justifyContent: 'space-between', paddingHorizontal: 10, backgroundColor: colors.white,
+               borderWidth:1 }}>
               <TextInput
                 onChangeText={setWeight}
                 placeholder="weight"
@@ -123,7 +125,8 @@ const AddItem = ({ navigation, route }) => {
 
             </View>
           </View>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginTop: 25 }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',
+           marginTop: 30 }}>
             <Text
               style={{ ...styles.heading, width: '49%' }}>
               Expiry Date
@@ -132,10 +135,11 @@ const AddItem = ({ navigation, route }) => {
               style={{
                 flexDirection: 'row', justifyContent: 'space-between',
                 backgroundColor: colors.white, paddingHorizontal: 10,
-                alignSelf: 'flex-end', paddingVertical: 8, borderRadius: 10, width: '49%'
+                alignSelf: 'flex-end', paddingVertical: 8, borderRadius: 10, width: '49%',
+                borderWidth:1
               }}>
               <Text>{expiryDate || 'Date'}</Text>
-              <Icon name='calendar' size={20} color={colors.primary} />
+              <Icon name='calendar' size={20} color="red" />
             </TouchableOpacity>
           </View>
           <View style={{ marginTop: 14 }}>
