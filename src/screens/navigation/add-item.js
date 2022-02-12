@@ -29,7 +29,7 @@ const AddItem = ({ navigation, route }) => {
 
   const toast = () => {
     ToastAndroid.showWithGravityAndOffset(
-      'FOOD ADDED',
+      'ITEM ADDED',
       ToastAndroid.LONG,
       ToastAndroid.BOTTOM,
       20,
@@ -80,7 +80,7 @@ const AddItem = ({ navigation, route }) => {
         <View style={{ ...styles.body }}>
           <View style={styles.row}>
             <Text style={styles.heading}>
-              Food
+              Item
             </Text>
             <View
               style={{ ...styles.picker_container, borderRadius: 20, backgroundColor: colors.white,borderWidth:1 }}>
@@ -122,7 +122,6 @@ const AddItem = ({ navigation, route }) => {
               </Text>
             </View>
             <View>
-
             </View>
           </View>
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center',

@@ -18,12 +18,12 @@ const viewitem = ({ navigation }) => {
   var [foodItemList, setFoodItemList] = useState([]);
   var [searchList, setSearchList] = useState([]);
   var [searchText, setSearchText] = useState('');
-  const [showModal,setShowModal]=React.useState(false)
-  const [useItem,setUseItem]=React.useState({})
+  const [showModal, setShowModal] = React.useState(false)
+  const [useItem, setUseItem] = React.useState({})
   const [selectedCategory, setSelectedCategory] = useState(0);
   const [user, setUser] = React.useState({});
 
-  const getViewItems=(category_id)=>FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0&user_id=${user?.id}`);
+  const getViewItems = (category_id) => FRIDGE_ACTIONS.getData(`${urls.get_items_by_cat_id}${category_id}&qty=0&user_id=${user?.id}`);
 
   const onPressCategory = async (category_id = 1) => {
     if (selectedCategory === category_id) {
@@ -42,13 +42,13 @@ const viewitem = ({ navigation }) => {
   React.useEffect(() => {
     // getNotiCounter();
     (async () => {
-        const user = await AsyncStorage.getItem('@user');
-        if (user) {
-            setUser(JSON.parse(user));
-            console.log('JSON.parse(user):', JSON.parse(user));
-        }
+      const user = await AsyncStorage.getItem('@user');
+      if (user) {
+        setUser(JSON.parse(user));
+        console.log('JSON.parse(user):', JSON.parse(user));
+      }
     })();
-}, [])
+  }, [])
   const valueSeacrch = async () => {
     try {
       // const res=await FRIDGE_ACTIONS.getData(urls.search_item+searchText);
@@ -61,19 +61,19 @@ const viewitem = ({ navigation }) => {
       alert('Item Not Found');
     }
   };
-  const onUse=async(item)=>{
-    setUseItem({...item,available:item?.qty});
+  const onUse = async (item) => {
+    setUseItem({ ...item, available: item?.qty });
     setShowModal(true);
   }
-  const updateQty=async()=>{
+  const updateQty = async () => {
     try {
-      console.log(useItem.available-useItem?.qty);
+      console.log(useItem.available - useItem?.qty);
       // return;
       setShowModal(false);
-     
+
       const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${useItem?.id}&qty=${useItem?.qty}&expiry=${useItem?.expiry_date}&isAdd=false&user_id=${user?.id}`,);
       console.log('res:of update: ', res);
-      const resp=await getViewItems(selectedCategory);
+      const resp = await getViewItems(selectedCategory);
       setFoodItemList(resp?.data);
       // toast();
     } catch (error) {
@@ -85,10 +85,11 @@ const viewitem = ({ navigation }) => {
       foodItemList.map((ele) => {
         return (
           <View style={styles.item}>
-            <View style={{  flexDirection: 'row', alignItems: 'center', width: '50%' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', width: '50%' }}>
               <Text numberOfLines={1} style={{ width: '80%', }}>{ele.item_name}</Text>
-              <TouchableOpacity onPress={()=>onUse(ele)} style={{ paddingHorizontal: 5,borderRadius:5,backgroundColor: colors.primary,}}>
-                <Text style={{color:colors.white}}>Use</Text>
+              <TouchableOpacity onPress={() => onUse(ele)}
+                style={{ paddingHorizontal: 5, borderRadius: 5, backgroundColor: colors.primary, }}>
+                <Text style={{ color: colors.white }}>Use</Text>
               </TouchableOpacity>
             </View>
             <Text >{ele.qty} {ele.unit}</Text>
@@ -105,7 +106,7 @@ const viewitem = ({ navigation }) => {
       <ImageBackground
         style={{ width: '100%', height: '100%' }}
         source={require('../images/mff.jpg')}>
-        <ScrollView contentContainerStyle={{ flexGrow: 1,paddingBottom:100 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 100 }}>
           <View style={{ paddingHorizontal: 22, flex: 1 }}>
             <View style={styles.searchbar}>
               <TextInput
@@ -164,22 +165,34 @@ const viewitem = ({ navigation }) => {
         </ScrollView>
       </ImageBackground>
       <ReactNativeModal
-       onBackButtonPress={()=>setShowModal(false)}
-       onBackdropPress={()=>setShowModal(false)}
-       isVisible={showModal}>
-           <View style={{backgroundColor:colors.white,padding:20,borderRadius:20,height:200}}>
-             <Text>Enter your needed quantity in {useItem?.unit} </Text>
-             <TextInput
-              placeholder='Enter qty'
-              onChangeText={(t)=>{
-               console.log('bool: ',t<useItem.available);
-               setUseItem({
-                 ...useItem,
-                 qty:t<useItem.available?t:useItem.qty,
-               })
-             }} value={useItem?.qty+''}/>
-             <PrimaryButton onPress={updateQty} title={'Use'}/>
-           </View>
+        onBackButtonPress={() => setShowModal(false)}
+        onBackdropPress={() => setShowModal(false)}
+        isVisible={showModal}>
+        <View style={{ backgroundColor: colors.white, padding: 20, borderRadius: 20, height: 230 }}>
+          <Text
+            style={{ textAlign: "center",fontWeight:'700',
+            fontSize:16 }}>
+               Quantity you want to use {useItem?.unit} </Text>
+          <TextInput
+            style={{
+              borderWidth: StyleSheet.hairlineWidth, borderRadius: 16,
+              paddingLeft: 12, marginTop: 18,height:45
+            }}
+            placeholder='Enter qty'
+            onChangeText={(t) => {
+              console.log('bool: ', t < useItem.available);
+              setUseItem({
+                ...useItem,
+                qty: t < useItem.available ? t : useItem.qty,
+              })
+            }} value={useItem?.qty + ''} />
+          <TouchableOpacity onPress={updateQty} 
+           style={{backgroundColor:colors.primary,marginTop:50,alignItems:'center',
+           width:200,height:45,padding:10,marginHorizontal:45,borderRadius:16
+           }}>
+             <Text style={{color:colors.white,fontSize:18,fontWeight:"700"}}>Use</Text>
+             </TouchableOpacity>
+        </View>
       </ReactNativeModal>
     </View>
   );

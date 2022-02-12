@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, ImageBackground, TextInput, ActivityIndicator, } from 'react-native';
+import { StyleSheet, Text, View, ImageBackground, TextInput, ActivityIndicator } from 'react-native';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import ReactNativeModal from 'react-native-modal';
 import PushNotification from 'react-native-push-notification';
@@ -28,14 +28,14 @@ const todaymeal = (props) => {
 
             let user = await AsyncStorage.getItem('@user');
             if (user) {
-                user=JSON.parse(user);
+                user = JSON.parse(user);
                 setUser(user);
                 const res = await FRIDGE_ACTIONS.getData(`Dishes/Getdishes?user_id=${user?.id}`);
                 console.log('res: ', res?.data);
                 setDishes(res?.data)
             }
         } catch (error) {
-           alert(error);
+            alert(error);
         }
     }
     useEffect(() => {
@@ -84,9 +84,11 @@ const todaymeal = (props) => {
                 source={require('../images/123.jpg')}>
                 <CustomHeader navigation={props.navigation} title={'Dishes'} />
                 <View style={{ paddingHorizontal: 22, flex: 1 }}>
-                    <PrimaryButton onPress={() => props.navigation.navigate("newdish")} title={'DISHES'} plus={'pluscircleo'} />
+                    <PrimaryButton
+                        onPress={() => props.navigation.navigate("newdish")} title={'DISHES'} plus={'pluscircleo'} />
                     <View style={{ flex: 1 }}>
-                        <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
+                        <ScrollView showsVerticalScrollIndicator={false}
+                            contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
                             {dishes.map((e) => {
                                 return (
                                     <TouchableOpacity onPress={() => onPressDish(e)}
@@ -108,26 +110,48 @@ const todaymeal = (props) => {
             </ImageBackground>
             {/* Here is modal to cook a dish */}
             <ReactNativeModal
+                animationType={'slide'}
                 backdropOpacity={0.2}
                 visible={showModal}
                 style={{ margin: 0 }}
             >
-                <View style={{ alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20, backgroundColor: colors.tertiary }}>
-                    <Text style={{ alignSelf: 'center', fontSize: 17 }}>Are you sure to Cook {dish.dish_name}?</Text>
-                    <Text style={{ alignSelf: 'center', fontSize: 14, marginTop: 10, width: '70%' }}>No. Of People</Text>
-                    <TextInput editable={!loading} value={persons} onChangeText={setPersons} keyboardType='number-pad'
+                <View style={{
+                    alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20,
+                    backgroundColor: colors.tertiary
+                }}>
+                    <Text style={{ alignSelf: 'center', fontSize: 17 }}>
+                        Are you sure to Cook {dish.dish_name}?</Text>
+                    <Text style={{
+                        alignSelf: 'center', fontSize: 14, marginTop: 10, width: '70%'
+                    }}>
+                        No. Of People</Text>
+                    <TextInput editable={!loading} value={persons} onChangeText={setPersons}
+                        keyboardType='number-pad'
                         style={{
                             alignSelf: 'center', width: '70%', paddingHorizontal: 15,
                             borderWidth: StyleSheet.hairlineWidth, paddingVertical: 5,
-                            marginTop: 10, borderRadius: 10
+                            marginTop: 14, borderRadius: 10
                         }} placeholder='No. of people' />
-                    {loading && <ActivityIndicator style={{ alignSelf: 'center', marginTop: 30 }} size={'small'} color={colors.primary} />}
-                    {message && <Text style={{ alignSelf: 'center', marginTop: 10, height: 70, color: 'red' }}>{message}</Text>}
-                    <View style={{ position: 'absolute', bottom: 20, alignSelf: 'center', width: '100%', flexDirection: 'row', justifyContent: 'space-between' }}>
-                        <PrimaryButton disabled={loading} onPress={onOk} title={'OK'} style={{ width: '45%' }} />
-                        <PrimaryButton disabled={loading} onPress={() => { setShowModal(false); setMessage(false) }}
+                    {loading && <ActivityIndicator style={{ alignSelf: 'center', marginTop: 30 }}
+                        size={'small'} color={colors.primary} />}
+                    {message && <Text style={{
+                        alignSelf: 'center', marginTop: 10, height: 70, color: 'red'
+                    }}>{message}</Text>}
+                    <View style={{
+                        position: 'absolute', bottom: 20, alignSelf: 'center', width: '100%',
+                        flexDirection: 'row', justifyContent: 'space-between'
+                    }}>
+                        <PrimaryButton disabled={loading} onPress={onOk} title={'OK'}
+                            style={{ width: '45%' }} />
+                        <PrimaryButton disabled={loading} onPress={() => {
+                            setShowModal(false);
+                            setMessage(false)
+                        }}
                             textStyle={{ color: colors.black }} title={'Cancel'}
-                            style={{ width: '45%', backgroundColor: colors.white, borderWidth: StyleSheet.hairlineWidth }} />
+                            style={{
+                                width: '45%', backgroundColor: colors.white,
+                                borderWidth: StyleSheet.hairlineWidth
+                            }} />
                     </View>
                 </View>
             </ReactNativeModal>

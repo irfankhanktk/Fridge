@@ -19,7 +19,7 @@ const Home = (props) => {
         }
     }
     React.useEffect(() => {
-         //getNotiCounter();
+        //getNotiCounter();
         (async () => {
             const user = await AsyncStorage.getItem('@user');
             if (user) {
@@ -32,7 +32,7 @@ const Home = (props) => {
         <View style={{ flex: 1 }}>
             <ImageBackground style={{ width: '100%', height: '100%', flex: 1 }}
                 source={require('../images/inside.jpg')}>
-                    {/* <Icon name="person" size={30} color={colors.white}/> */}
+                {/* <Icon name="person" size={30} color={colors.white}/> */}
                 <CustomHeader user_name={user?.u_name} backBtn={false} title={'Smart Fridge Food'} navigation={props.navigation} />
                 <View style={{ flex: 1, justifyContent: 'center', paddingHorizontal: 22 }}>
                     <TouchableOpacity onPress={() => props.navigation.navigate("Add")}

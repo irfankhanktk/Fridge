@@ -24,8 +24,6 @@ const notification = ({ navigation }) => {
             alert(error);
         }
     }
-
-    
     React.useEffect(() => {
         getNotifications();
     }, [])
@@ -36,7 +34,7 @@ const notification = ({ navigation }) => {
                 <ImageBackground style={{ width: '100%', height: '100%' }}
                     source={require('../images/123.jpg')}>
                     <View style={{ flex: 1, marginTop: 30, }}>
-                        <ScrollView contentContainerStyle={{ paddingHorizontal: 14 }}>
+                        <ScrollView contentContainerStyle={{ paddingHorizontal: 20 }}>
                             {
                                 notifications?.map((ele) =>
                                     <View style={{
