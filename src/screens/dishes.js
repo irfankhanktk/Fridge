@@ -69,7 +69,7 @@ const todaymeal = (props) => {
             if (res?.status === 201) {
                 manageNotification(res?.data);
             } else {
-                // setMessage(res?.data);
+                setMessage(res?.data);
             }
         } catch (error) {
             console.log('error::', error);
@@ -111,13 +111,13 @@ const todaymeal = (props) => {
             {/* Here is modal to cook a dish */}
             <ReactNativeModal
                 animationType={'slide'}
-                backdropOpacity={0.2}
+                // backdropOpacity={0.2}
                 visible={showModal}
                 style={{ margin: 0 }}
             >
                 <View style={{
                     alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20,
-                    backgroundColor: colors.tertiary
+                    backgroundColor: colors.white,
                 }}>
                     <Text style={{ alignSelf: 'center', fontSize: 17 }}>
                         Are you sure to Cook {dish.dish_name}?</Text>

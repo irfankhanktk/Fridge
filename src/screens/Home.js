@@ -10,23 +10,28 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = (props) => {
     const [notificationsCountr, setNotificationsCounter] = React.useState();
     const [user, setUser] = React.useState({});
-    const getNotiCounter = async () => {
+    const getNotiCounter = async (user_id) => {
         try {
-            const response = await FRIDGE_ACTIONS.getData(`${urls.notificationsCounter}`);
+            const response = await FRIDGE_ACTIONS.getData(`${urls.notificationsCounter}?user_id=${user_id}`);
+            console.log('response?.data::',response?.data);
             setNotificationsCounter(response?.data);
         } catch (error) {
             alert(error);
         }
     }
     React.useEffect(() => {
-        //getNotiCounter();
-        (async () => {
-            const user = await AsyncStorage.getItem('@user');
+        const unsubscribe =props?.navigation.addListener('focus', async() => {
+            // do something
+            let user = await AsyncStorage.getItem('@user');
             if (user) {
-                setUser(JSON.parse(user));
-                console.log('JSON.parse(user):', JSON.parse(user));
+                user=JSON.parse(user)
+                setUser(user);
+                getNotiCounter(user?.id);
+                console.log('JSON.parse(user):', user);
             }
-        })();
+          });
+      
+          return unsubscribe;
     }, [])
     return (
         <View style={{ flex: 1 }}>
@@ -56,9 +61,9 @@ const Home = (props) => {
                         <Text style={styles.text}>
                             NOIFICATIONS
                         </Text>
-                        {notificationsCountr && <View style={{ height: 20, width: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, position: 'absolute', left: 30, borderRadius: 10, }}>
+                        {notificationsCountr? <View style={{ height: 20, width: 20, justifyContent: 'center', alignItems: 'center', backgroundColor: colors.secondary, position: 'absolute', left: 30, borderRadius: 10, }}>
                             <Text style={{ color: colors.white, }}>{notificationsCountr}</Text>
-                        </View>}
+                        </View>:null}
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => props.navigation.navigate("Pair")}
                         style={styles.button}>

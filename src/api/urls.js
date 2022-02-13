@@ -1,5 +1,5 @@
 export default {
-   base_url: 'http://192.168.43.137/Fridge_API/api',
+   base_url: 'http://192.168.100.3/Fridge_API/api',
    // 192.168.43.137 mobile ip
    //192.168.100.56 irfan ip
    signin: 'Auth/Signin',
@@ -19,7 +19,8 @@ export default {
    //cookdish clear
    cook_dish: 'Dishes/CookDish?id=',
    //get notifications
-   notifications: 'notifications/Getnotifications',
+   item_notifications: 'notifications/GetItemNotifications',
+   stock_notifications: 'notifications/GetStockNotifications',
    //get counter
    notificationsCounter: 'notifications/GetNotificationsCounter',
 
