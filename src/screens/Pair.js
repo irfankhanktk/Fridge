@@ -12,12 +12,16 @@ const Pair = ({navigation}) => {
   const [users, setUsers] = React.useState([]);
 
 
- const onPair =async(item)=>{
+ const onTogglePair =async(item)=>{
    try {
     let user = await AsyncStorage.getItem('@user');
     if (user) {
       user = JSON.parse(user);
-       const res= await FRIDGE_ACTIONS.getData(`${urls.pair_user}?user_id=${user?.id}&pair_id=${item?.user_id}`);
+      let url=`${urls.pair_user}?user_id=${user?.id}&pair_id=${item?.user_id}`;
+       if(item?.is_pair){
+          url=`Pair/UnPairUser?id=${item?.id}&user_id=${user?.id}`
+       }
+       const res= await FRIDGE_ACTIONS.getData(url);
        setUsers(res?.data);
     }
    } catch (error) {
@@ -60,7 +64,7 @@ const Pair = ({navigation}) => {
               }}>
               <Text>{item?.u_name}</Text>
               <TouchableOpacity
-                disabled={item?.is_pair ? true : false}
+                // disabled={item?.is_pair ? true : false}
                 style={{
                   backgroundColor: item?.is_pair
                     ? colors.gray
@@ -69,8 +73,8 @@ const Pair = ({navigation}) => {
                   paddingHorizontal: 10,
                   paddingVertical: 5,
                 }}
-                onPress={()=>onPair(item)}>
-                <Text>{item?.is_pair ? `Paired` : 'Pair'}</Text>
+                onPress={()=>onTogglePair(item)}>
+                <Text>{item?.is_pair ? `un-Pair` : 'Pair'}</Text>
               </TouchableOpacity>
             </View>
           )}

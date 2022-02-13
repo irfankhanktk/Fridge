@@ -79,46 +79,60 @@ const todaymeal = (props) => {
         }
     }
     return (
-        <View>
-            <ImageBackground style={{ width: '100%', height: '100%' }}
-                source={require('../images/123.jpg')}>
-                <CustomHeader navigation={props.navigation} title={'Dishes'} />
-                <View style={{ paddingHorizontal: 22, flex: 1 }}>
-                    <PrimaryButton
-                        onPress={() => props.navigation.navigate("newdish")} title={'DISHES'} plus={'pluscircleo'} />
-                    <View style={{ flex: 1 }}>
-                        <ScrollView showsVerticalScrollIndicator={false}
-                            contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
-                            {dishes.map((e) => {
-                                return (
-                                    <TouchableOpacity onPress={() => onPressDish(e)}
-                                        style={{
-                                            backgroundColor: colors.secondary,
-                                            paddingVertical: 10, borderRadius: 10, marginHorizontal: 40,
-                                            marginTop: 18, alignItems: 'center',
-                                        }}>
-                                        <Text style={{
-                                            color: colors.primary, fontWeight: '800', height: 25, fontSize: 18
-                                        }}>{e.dish_name}
-                                        </Text>
-                                    </TouchableOpacity>
-                                )
-                            })}
-                        </ScrollView>
-                    </View>
+        <View style={{flex: 1 }}>
+            {/* <ImageBackground style={{ width: '100%', height: '100%' }}
+                source={require('../images/123.jpg')}> */}
+            <CustomHeader navigation={props.navigation} title={'Dishes'} />
+            <View style={{ paddingHorizontal: 22, flex: 1 }}>
+                <PrimaryButton
+                    onPress={() => props.navigation.navigate("newdish")} title={'DISHES'} plus={'pluscircleo'} />
+                <View style={{ flex: 1 }}>
+                    <ScrollView showsVerticalScrollIndicator={false}
+                        contentContainerStyle={{ flexGrow: 1, paddingBottom: 50 }}>
+                        {dishes.map((e) => {
+                            return (
+                                <View style={{flexDirection:'row',width:'100%',alignItems:'center',justifyContent:'space-between'}}>
+                                <TouchableOpacity  onPress={() => onPressDish(e)}
+                                    style={{
+                                        width:200,
+                                        // flex:1,
+                                        backgroundColor: colors.secondary,
+                                        paddingVertical: 10, borderRadius: 10,
+                                        //  marginHorizontal: 40,
+                                        marginTop: 18, alignItems: 'center',
+                                    }}>
+                                    <Text style={{
+                                        color: colors.primary, fontWeight: '800', fontSize: 18
+                                    }}>{e.dish_name}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={()=>props?.navigation?.navigate('Notify',{dish:e})} style={{width:80,alignItems:'center',backgroundColor:'red',borderRadius:20}}>
+                                    <Text>Notify</Text>
+                                </TouchableOpacity>
+                                </View>
+                            )
+                        })}
+                    </ScrollView>
                 </View>
-            </ImageBackground>
+            </View>
+            {/* </ImageBackground> */}
             {/* Here is modal to cook a dish */}
             <ReactNativeModal
-                animationType={'slide'}
-                // backdropOpacity={0.2}
                 visible={showModal}
-                style={{ margin: 0 }}
+                backdropOpacity={0.5}
+                style={{ margin: 0, }}
             >
+                <View style={{flex:1,justifyContent:'center'}}>
                 <View style={{
-                    alignSelf: 'center', height: 300, width: '80%', padding: 15, borderRadius: 20,
+                    alignSelf: 'center',
+                    height: 300, 
+                    width: '80%',
+                     padding: 15,
+                      borderRadius: 20,
                     backgroundColor: colors.white,
                 }}>
+
+               
                     <Text style={{ alignSelf: 'center', fontSize: 17 }}>
                         Are you sure to Cook {dish.dish_name}?</Text>
                     <Text style={{
@@ -152,6 +166,7 @@ const todaymeal = (props) => {
                                 width: '45%', backgroundColor: colors.white,
                                 borderWidth: StyleSheet.hairlineWidth
                             }} />
+                    </View>
                     </View>
                 </View>
             </ReactNativeModal>

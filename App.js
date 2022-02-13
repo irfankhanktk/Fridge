@@ -17,6 +17,7 @@ import todaymeal from './src/screens/dishes';
 import newdish from './src/screens/use/newdish';
 import useView from './src/screens/use/useView';
 import viewitem from './src/screens/viewitem';
+import Notify from './src/screens/notify';
 
 //Axios Configuration
 client = axios.create({
@@ -87,6 +88,10 @@ function App() {
         <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
+        />
+        <Stack.Screen
+          name="Notify"
+          component={Notify}
         />
         <Stack.Screen
           name="Signin" component={Signin}

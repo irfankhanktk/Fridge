@@ -63,12 +63,16 @@ const AddItem = ({ navigation, route }) => {
 }, [])
   const onAdd = async () => {
     try {
-
+      if(weight*1>5){
+         alert('you could add more than 5');
+         return;
+      }
       const res = await FRIDGE_ACTIONS.getData(`${urls.update_item}?item_id=${selectItemId}&qty=${weight}&expiry=${expiryDate}&user_id=${user?.id}`,);
       console.log('res:', res);
       toast();
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert(error);
     }
   }
   return (

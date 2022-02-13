@@ -28,6 +28,20 @@ const notification = ({ navigation }) => {
             alert(error);
         }
     }
+    const onRemove = async (item_id) => {
+        try {
+           
+          
+            const response = await FRIDGE_ACTIONS.getData(`items/RemoveItem?item_id=${item_id}`);
+            console.log('res of remove::',response?.data);
+           const copy= itemNotifications.filter(e=>e.item_id!=item_id);
+            // const response2 = await FRIDGE_ACTIONS.getData(`${urls.item_notifications}?user_id=${user?.id}`);
+            setItemNotifications(copy);
+            
+        } catch (error) {
+            alert(error);
+        }
+    }
     React.useEffect(() => {
         getNotifications();
     }, [])
@@ -77,6 +91,9 @@ const notification = ({ navigation }) => {
                                         <View style={{width: '70%',paddingLeft:10 }}>
                                             <Text style={{ flex: 1,}}>{ele?.item_name}{ele?.expiry_duration<0?' has expired since '+(-ele?.expiry_duration)+' hours':' will expire within '+(ele?.expiry_duration)+' hours'}</Text>
                                         </View>
+                                       {ele?.expiry_duration<0&& <TouchableOpacity onPress={()=>onRemove(ele?.item_id)}>
+                                            <Text>Remove</Text>
+                                        </TouchableOpacity>}
                                         {/* <Text style={{ width: '20%', textAlign: 'center' }}>
                                             {moment(ele?.created_at).fromNow().toLocaleString()}
                                         </Text> */}
