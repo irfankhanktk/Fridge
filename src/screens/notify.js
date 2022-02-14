@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import { FlatList, StyleSheet, Text, View } from 'react-native';
+import PushNotification from 'react-native-push-notification';
 import FRIDGE_ACTIONS from '../api/actions';
 import CustomHeader from '../components/custom-header';
 const Notify = (props) => {
@@ -36,12 +37,22 @@ console.log('props?.route?.params::',props?.route?.params);
         // Return the function to unsubscribe from the event so it gets removed on unmount
         return unsubscribe;
     }, [])
+    const manageNotification = (message) => {
+        PushNotification.localNotification({
+            channelId: "channel-id",
+            title: `You cannot make ${dish?.dish_name}`,
+            message:'you are need '+ message,
+        });
+    }
     const notifyUsers=async(item)=>{
         try {
             const copy=users.filter(x=>x.id!==item?.id)
             setUsers(copy);
-            const res = await FRIDGE_ACTIONS.getData(`Notifications/NotifyUser?user_id=${item?.id}&description=${user?.u_name} want to cook ${dish?.dish_name}&dish_name=${dish?.dish_name}`);
+            const res = await FRIDGE_ACTIONS.getData(`Notifications/NotifyUser?user_id_to=${item?.id}&description=${user?.u_name} want to cook ${dish?.dish_name}&id=${dish?.id}&user_id=${user?.id}`);
             console.log('res:',res?.data);
+            if (res?.status === 201) {
+                manageNotification(res?.data);
+            }
         } catch (error) {
             alert(error)
         }
@@ -55,7 +66,7 @@ console.log('props?.route?.params::',props?.route?.params);
                    You are going to notify users that you want to cook {dish?.dish_name}
                 </Text>
                 {users?.length===0&&!loading? <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
-                   <Text>You are not paired with any user</Text>
+                   <Text>You have no more pair</Text>
                </View>:
                <FlatList
                data={users}
